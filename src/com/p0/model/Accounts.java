@@ -11,6 +11,15 @@ public class Accounts {
 	
 	
 	
+	public Accounts() {
+		super();
+	}
+	public Accounts(double accountBalance, String username, String password) {
+		super();
+		this.accountBalance = accountBalance;
+		this.username = username;
+		this.password = password;
+	}
 	public double getAccountBalance() {
 		return accountBalance;
 	}
@@ -35,6 +44,11 @@ public class Accounts {
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
 		this.accountType = AccountType.Manager;
+	}
+	@Override
+	public String toString() {
+		return "Accounts [accountBalance=" + accountBalance + ", username=" + username + ", password=" + password
+				+ ", accountType=" + accountType + "]";
 	}
 	
 	

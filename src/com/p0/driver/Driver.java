@@ -3,13 +3,16 @@ package com.p0.driver;
 import java.util.List;
 import java.util.Scanner;
 
+import com.p0.accountRepository.accountRepository;
 import com.p0.model.Accounts;
 import com.p0.model.Rings;
 import com.p0.ringRepository.RingRepository;
 
 public class Driver {
 	public static void main(String[] args) {
-
+		
+		com.p0.accountRepository.accountRepository accountRepository = new accountRepository();
+		List <Accounts> accounts = accountRepository.findAllAccounts();
 		RingRepository ringRepository = new RingRepository();
 		Rings[] rings = ringRepository.findAllRings();
 		
@@ -17,7 +20,8 @@ public class Driver {
 	System.out.println(rings[1]);
 	System.out.println(rings[2]);
 	System.out.println(rings[3]);
-
+	System.out.println(accounts);
+	
 		printStoreFront();
 
 		// Entry Menu Selection
@@ -62,7 +66,11 @@ public class Driver {
 	}
 
 	private static void createAccount() {
-
+		
+		Scanner scanner = new Scanner(System.in);
+		String userinput = scanner.next();
+		
+		
 		System.out.println("Enter Desired Username");
 
 		System.out.println("Enter Desired Password");

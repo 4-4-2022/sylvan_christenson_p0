@@ -15,7 +15,7 @@ public RingRepository() {
 }
 
 public Rings[] findAllRings() {
-	// TODO Auto-generated method stub
+
 	return this.ring;
 }
 
