@@ -4,24 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.p0.model.Accounts;
-
 public class accountRepository {
-	private List<Accounts> accounts = new ArrayList<Accounts>();
+	private static List<Accounts> accounts = new ArrayList<Accounts>();
 
-	public Accounts findAccountByUsername(String username) {
-		for (Accounts accounts : accounts) {
-			if (accounts.getUsername().equalsIgnoreCase(username))
-				return accounts;
-		}
-		return null;
-		
 	
+	
+	public static boolean signIn(String username, String password) {
+		for (Accounts accounts : accounts) {
+			if (accounts.getUsername().equalsIgnoreCase(username) && accounts.getPassword().equalsIgnoreCase(password))
+				System.out.println("Current Available Balance  " + accounts.getAccountBalance()); 
+		return true;
+		
+		
+	}
+		return false;
 
 }
 
-	public List<Accounts> findAllAccounts() {
+	public String findAllAccounts() {
 
-		return accounts;
+		return accounts.toString();
 	}
 
 	public accountRepository() {

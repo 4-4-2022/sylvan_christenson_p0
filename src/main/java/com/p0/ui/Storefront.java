@@ -11,7 +11,7 @@ import com.p0.ringRepository.RingRepository;
 import com.p0.service.AccountManagement;
 
 public class Storefront {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(Storefront.class);
 
 	public static void printStoreFront() {
@@ -29,7 +29,6 @@ public class Storefront {
 
 		// Entry Menu Selection
 		RingRepository ringRepository = new RingRepository();
-
 		Rings[] rings = ringRepository.findAllRings();
 		Scanner scanner = new Scanner(System.in);
 
@@ -38,7 +37,14 @@ public class Storefront {
 			int userSelection = scanner.nextInt();
 			switch (userSelection) {
 			case 1:
-				AccountManagement.signIn();
+				System.out.println("Enter Username");
+				String username = scanner.next();
+				System.out.println("Enter Password");
+				String password = scanner.next();
+				if (accountRepository.signIn(username, password)) {
+					AccountManagement.accountDetails();
+				} else
+					System.out.println("No account found.");
 				break;
 			case 2:
 				AccountManagement.createAccount();
