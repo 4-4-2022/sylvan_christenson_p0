@@ -1,0 +1,5 @@
+14:18:24.235 [main] INFO  com.p0.ui.Storefront - The retrieved cupcakes are: Rings [material=Iron, gem=Ruby, jeweler=Peppies, itemName=Iron Band, price=50.0]
+14:20:55.189 [main] INFO  com.p0.ui.Storefront - The retrieved rings are: Rings [material=Iron, gem=Ruby, jeweler=Peppies, itemName=Iron Band, price=50.0]
+14:25:52.581 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1200.0, username=biscuit, password=password, accountType=null]
+14:48:28.188 [main] INFO  com.p0.ui.Storefront - The retrieved rings are: Rings [material=Silver, gem=Ruby, jeweler=Peppies, itemName=Silver Band, price=150.0]
+14:50:52.163 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=200.0, username=Defy, password=password, accountType=null]
