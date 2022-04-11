@@ -5,7 +5,7 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.p0.accountRepository.accountRepository;
+import com.p0.accountRepository.AccountRepository;
 import com.p0.model.Rings;
 import com.p0.ringRepository.RingRepository;
 import com.p0.service.AccountManagement;
@@ -14,20 +14,10 @@ public class Storefront {
 
 	private static final Logger logger = LoggerFactory.getLogger(Storefront.class);
 
-	public static void printStoreFront() {
+	public static void storeFront() {
 
-		System.out.println("Howdy. Welcome to Peppies' Rings and Things");
-		System.out.println("--------------------------------------------- ");
-		System.out.println("--------------------------------------------- ");
-		System.out.println("--------------______________----------------- ");
-		System.out.println("------------ /_____________/|---------------- ");
-		System.out.println("-------------Peppies'      ||---------------- ");
-		System.out.println("-------------Rings & Things||----------------");
-		System.out.println("-------------| ___         ||----------------");
-		System.out.println("_____________|_| |_________||________________");
-		System.out.println("1) Sign In    2) Create Account    3) Exit   ");
-
-		// Entry Menu Selection
+		ScreenPrint.printLogIn();
+		AccountRepository accountRepo = new AccountRepository();
 		RingRepository ringRepository = new RingRepository();
 		Rings[] rings = ringRepository.findAllRings();
 		Scanner scanner = new Scanner(System.in);
@@ -41,14 +31,18 @@ public class Storefront {
 				String username = scanner.next();
 				System.out.println("Enter Password");
 				String password = scanner.next();
-				if (accountRepository.signIn(username, password)) {
-					AccountManagement.accountDetails();
+				if (AccountRepository.signIn(username, password)) {
+
+					System.out.println("Welcome" + " " + username + "!  Your current available balance is" + " "
+							+ accountRepo.getAccountBalance(username));
+					AccountManagement.accountDetailsManagement(username);
+					
 				} else
 					System.out.println("No account found.");
 				break;
 			case 2:
-				AccountManagement.createAccount();
-				break;
+				accountRepo.createAccount();
+				
 			case 3:
 				isUserInterested = false;
 				break;
@@ -59,9 +53,17 @@ public class Storefront {
 				System.out.println(retrievedRing);
 				logger.info("The retrieved rings are: " + retrievedRing);
 				break;
+			case 5: 
+				String usernameTest = "Peppies";
+				System.out.println(
+				accountRepo.getAccountBalance(usernameTest));
+				
+				break;
 			default:
 				System.out.println("Invalid Entry");
 			}
+		scanner.close();
 		}
+		
 	}
 }

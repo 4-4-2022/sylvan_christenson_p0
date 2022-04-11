@@ -1,18 +1,17 @@
 package com.p0.driver;
 
-import com.p0.ui.Storefront;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.p0.accountRepository.*;
+import com.p0.accountRepository.AccountRepository;
+import com.p0.ui.ScreenPrint;
+import com.p0.ui.Storefront;
 
 public class Driver {
 	public static void main(String[] args) {
 		final Logger logger = LoggerFactory.getLogger(Driver.class);
-		accountRepository accountRepo = new accountRepository();
-		Storefront.printStoreFront();
-		logger.info("All Accounts at termination" + accountRepo.findAllAccounts());
+		AccountRepository accountRepo = new AccountRepository();
+		Storefront.storeFront();
 		System.out.println("Farewell.");
 
 			

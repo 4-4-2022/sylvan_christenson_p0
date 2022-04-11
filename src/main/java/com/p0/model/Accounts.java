@@ -7,6 +7,7 @@ public class Accounts {
 	private AccountType accountType;
 	
 	
+	
 	public Accounts() {
 		super();
 	}
@@ -33,7 +34,7 @@ public class Accounts {
 		this.accountType = accountType;
 	}
 
-	public double getAccountBalance() {
+	public double getAccountBalance(String username2) {
 		return accountBalance;
 	}
 
