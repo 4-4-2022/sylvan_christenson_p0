@@ -18,7 +18,7 @@ import com.p0.service.AccountManagement;
 import com.p0.util.Connector;
 
 public class AccountRepositoryImpl implements AccountRepository {
-	private static AccountRepositoryImpl accountRepo;
+	// private static AccountRepositoryImpl accountRepo;
 
 	final static Logger logger = LoggerFactory.getLogger(Driver.class);
 
@@ -29,16 +29,119 @@ public class AccountRepositoryImpl implements AccountRepository {
 			if (account.getUsername().equalsIgnoreCase(username)) {
 				double currentBalance = account.getAccountBalance(username);
 				System.out.println("Your current balance is:" + " " + currentBalance);
-			} 
+			}
 		}
 
 	}
 
+	public void transfer(String username, String receivingUser, double withdrawAmount) {
+		for (Accounts account : findAllAccounts()) {
+			if (account.getUsername().equals(username)) {
+				double previousBalance = account.getAccountBalance(username);
+				double newBalance = (previousBalance - withdrawAmount);
+				if (newBalance < 0) {
+					System.out.println("Insufficient funds");
+					break;
+				} else {
+					Connection conn = null;
+					PreparedStatement stmt = null;
+					final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
+
+					try {
+
+						conn = Connector.getConnection();
+						stmt = conn.prepareStatement(SQL);
+						stmt.setDouble(1, newBalance);
+						stmt.setString(2, username);
+						stmt.execute();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} finally {
+						try {
+							conn.close();
+							stmt.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+
+				}
+			} else if (account.getUsername().equals(receivingUser)) {
+				double previousBalance = account.getAccountBalance(username);
+				double newBalance2 = (previousBalance + withdrawAmount);
+
+				Connection conn = null;
+				PreparedStatement stmt = null;
+				final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
+
+				try {
+
+					conn = Connector.getConnection();
+					stmt = conn.prepareStatement(SQL);
+					stmt.setDouble(1, newBalance2);
+					stmt.setString(2, receivingUser);
+					stmt.execute();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						conn.close();
+						stmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+		}
+	}
+
 	public void withdraw(String username, double withdrawAmount) {
+		for (Accounts account : findAllAccounts()) {
+			if (account.getUsername().equals(username)) {
+				double previousBalance = account.getAccountBalance(username);
+				double newBalance = (previousBalance - withdrawAmount);
+				if (newBalance < 0) {
+					System.out.println("Insufficient funds");
+					break;
+				} else {
+					Connection conn = null;
+					PreparedStatement stmt = null;
+					final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
+
+					try {
+
+						conn = Connector.getConnection();
+						stmt = conn.prepareStatement(SQL);
+						stmt.setDouble(1, newBalance);
+						stmt.setString(2, username);
+						stmt.execute();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					} finally {
+						try {
+							conn.close();
+							stmt.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	public void deposit(String username, double depositAmount) {
 		for (Accounts account : findAllAccounts()) {
 			if (account.getUsername().equalsIgnoreCase(username)) {
 				double previousBalance = account.getAccountBalance(username);
-				double newBalance = (previousBalance - withdrawAmount);
+				double newBalance = (previousBalance + depositAmount);
+
 				Connection conn = null;
 				PreparedStatement stmt = null;
 				final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
@@ -64,17 +167,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 			}
 		}
-	}
-
-	public void deposit(String username, double depositAmount) {
-		for (Accounts account : findAllAccounts()) {
-			if (account.getUsername().equalsIgnoreCase(username)) {
-				double previousBalance = account.getAccountBalance(username);
-
-			} else
-				break;
-		}
-
 	}
 
 	public Accounts checkForAccount(String username) {

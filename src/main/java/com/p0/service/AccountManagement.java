@@ -16,7 +16,7 @@ public class AccountManagement {
 
 	static AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 
-	public static void accountDetailsManagement(String usernameInput) {
+	public static void accountDetailsManagement(String usernameInput) throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		String username = usernameInput;
 		ScreenPrint.printAccountManagement(username);
@@ -44,7 +44,35 @@ public class AccountManagement {
 					accountRepo.deposit(username, depositAmount);
 					accountDetailsManagement(usernameInput);
 				case 4:
+					System.out.println("Please enter the username of the account you wish to transfer funds to");
+					String recveivingUser = scanner.next();
+					if (accountRepo.checkForAccount(recveivingUser) == null) {
 
+						while (isUserInterested) {
+							ScreenPrint.printNoTransferUserFound(recveivingUser);
+							int userChoice = scanner.nextInt();
+							switch (userChoice) {
+							case 1:break;
+							case 2:
+								accountRepo.getNewAccountInfo(username);
+							case 3:
+								isUserInterested = false;
+								break;
+							default:
+								ScreenPrint.printInvalidEntry();
+								break;
+
+							}
+
+						}
+
+					} else {
+						System.out.println("Please enter an amount you wish to transfer to the account:" + " " + recveivingUser);
+						double transferAmount = scanner.nextDouble();
+						accountRepo.transfer(username, recveivingUser, transferAmount);
+						ScreenPrint.printAccountManagement(username);
+						break;
+					}
 					break;
 				case 5:
 					ScreenPrint.printAccountManagement(username);
@@ -58,27 +86,23 @@ public class AccountManagement {
 								"Please enter the username of the account you wish to add as a secondary user");
 						String secondaryUser = scanner.next();
 						if (accountRepo.checkForSecondaryUser(username) == null) {
-							
-							
+
 							if (accountRepo.checkForAccount(secondaryUser) == null) {
 								System.out.println("No account was found... creating a new account.");
 								accountRepo.save(accountRepo.getNewAccountInfo(secondaryUser));
 								accountRepo.setSecondaryUser(username, secondaryUser);
 								ScreenPrint.printAccountManagement(username);
-								logger.info(secondaryUser + " was added as a secondary user to"+ " " + username);
+								logger.info(secondaryUser + " was added as a secondary user to" + " " + username);
 							} else {
 								accountRepo.setSecondaryUser(username, secondaryUser);
 
 							}
 
-							
-						
 						} else {
 							System.out.println("Account already has a secondary user");
 							ScreenPrint.printAccountManagement(username);
 
 						}
-						
 
 					}
 
@@ -98,8 +122,7 @@ public class AccountManagement {
 				}
 			}
 		} catch (InputMismatchException e) {
-			System.out.println(
-					"Invalid Entry: Please type only the number associated with your decision and then press enter.");
+			ScreenPrint.printInvalidEntry();
 		}
 
 	}

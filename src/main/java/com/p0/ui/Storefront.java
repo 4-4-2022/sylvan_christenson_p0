@@ -15,7 +15,7 @@ public class Storefront {
 
 	private static final Logger logger = LoggerFactory.getLogger(Storefront.class);
 
-	public static void storeFront() {
+	public static void storeFront() throws SQLException {
 
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 		RingRepository ringRepository = new RingRepository();
