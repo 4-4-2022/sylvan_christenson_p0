@@ -18,14 +18,14 @@ public class AccountManagement {
 	public static void accountDetailsManagement(String usernameInput) throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		String username = usernameInput;
-		ScreenPrint.printAccountManagement(username);
+		
 		boolean isUserInterested = true;
 
 		try {
 
 			while (isUserInterested) {
+				ScreenPrint.printAccountManagement(username);
 				int userSelection = scanner.nextInt();
-
 				switch (userSelection) {
 
 				case 1:
@@ -111,9 +111,11 @@ public class AccountManagement {
 					}
 					break;
 				case 8:
-					isUserInterested = false;
-					scanner.close();
-					break;
+					System.out.println("You are attempting to exit the program completely. Would you like to continue?");
+					if (EmployeeMenu.confirmation()) {
+					System.out.println("Farewell. Program Exited");
+					System.exit(0);}
+					else {break;}
 
 				default:
 					System.out.println("Invalid Entry");

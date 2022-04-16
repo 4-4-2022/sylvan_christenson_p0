@@ -39,15 +39,16 @@ public class EmployeeMenu {
 		return confirmation;
 	}
 
-	public static void singleAccountEdit(String username, String userToView) throws SQLException {
+	public static void singleAccountEditEmployee(String username, String userToView) throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
-		ScreenPrint.printAdministratorMenuSingleAccount(username, userToView);
+		ScreenPrint.printEmployeeMenuSingleAccount(username, userToView);
 		boolean userInterested = true;
 		while (userInterested) {
 			int userSelection = scanner.nextInt();
 			switch (userSelection) {
-			case 1: ScreenPrint.printSingleAccountEdit(userToView);
+			case 1: accountRepo.checkForAccount(userToView).toStringNoPass();
+			
 			case 2:System.out.println("This will permanently delete this account. Are you sure?"); 
 				if (EmployeeMenu.confirmation()) {
 					accountRepo.deleteAccount(userToView);
@@ -68,8 +69,82 @@ public class EmployeeMenu {
 		
 
 	}
+	public static void singleAccountEdit(String username, String userToView) throws SQLException {
+		Scanner scanner = new Scanner(System.in);
+		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
+		ScreenPrint.printAdministratorMenuSingleAccount(username, userToView);
+		boolean userInterested = true;
+		while (userInterested) {
+			int userSelection = scanner.nextInt();
+			switch (userSelection) {
+			case 1: ScreenPrint.printSingleAccountEdit(userToView);
+			
+			case 2:System.out.println("This will permanently delete this account. Are you sure?"); 
+				if (EmployeeMenu.confirmation()) {
+					accountRepo.deleteAccount(userToView);
+				
+			}
+			
+			case 3: userInterested = false;
+			break;
+				default: ScreenPrint.printInvalidEntry();
+				break;
+				}
+			}
+			
+		
 
-	public static void administratorMenu(String username) {
+		
+
+		
+
+	}
+	
+	public static void employeeMenu(String username) throws SQLException {
+		ServiceSelection serviceSelection = new ServiceSelection();
+		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
+		Scanner scanner = new Scanner(System.in);
+		ScreenPrint.printContinueAsEmployee(username);
+		boolean hasNotChosen = true;
+		while (hasNotChosen) {
+			int userSelection = scanner.nextInt();
+			switch (userSelection) {
+			case 1:
+				serviceSelection.serviceSelction(username);
+				hasNotChosen = false;
+				break;
+			case 2:
+				ScreenPrint.printEmployeeMenu(username);
+				while (hasNotChosen) {
+					int adminSelction = scanner.nextInt();
+					switch (adminSelction) {
+					case 1:
+						System.out.println("Please enter an account you wish to view");
+						String userToView = scanner.next();
+						singleAccountEdit(username, userToView);
+
+					case 2:
+						System.out.println(accountRepo.findAllAccounts());
+						break;
+
+					case 3:
+
+					default:
+						ScreenPrint.printInvalidEntry();
+						break;
+					}
+				}
+
+			default:
+				ScreenPrint.printInvalidEntry();
+				break;
+			}
+		}
+
+	}
+
+	public static void administratorMenu(String username) throws SQLException {
+		ServiceSelection serviceSelection = new ServiceSelection();
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 		Scanner scanner = new Scanner(System.in);
 		ScreenPrint.printContinueAsAdmin(username);
@@ -78,6 +153,7 @@ public class EmployeeMenu {
 			int userSelection = scanner.nextInt();
 			switch (userSelection) {
 			case 1:
+				serviceSelection.serviceSelction(username);
 				hasNotChosen = false;
 				break;
 			case 2:

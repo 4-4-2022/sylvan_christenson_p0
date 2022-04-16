@@ -20,8 +20,9 @@ public class Accounts {
 		this.password = password;
 		this.isEmployee = isEmployee;
 		this.isAdministrator = isAdministrator;
-		
+
 	}
+
 	public Accounts(double accountBalance, String username, String password, boolean isEmployee,
 			boolean isAdministrator, String secondaryUser) {
 		super();
@@ -43,6 +44,7 @@ public class Accounts {
 		this.username = username;
 		this.password = password;
 	}
+
 	public Accounts(double accountBalance, String username, String password, String secondaryUser) {
 		super();
 		this.accountBalance = accountBalance;
@@ -81,6 +83,12 @@ public class Accounts {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String toStringNoPass() {
+		return "Account Balance:" + " " + accountBalance + "\n" +  "Username:" + " " + username + "\n" + "Is an Employee:" + " " + isEmployee
+				+ "\n" + "Is an Administrator:" + " " + isAdministrator + ""
+						+ "\n" + "Secondary User:" + " " + secondaryUser;
 	}
 
 	@Override

@@ -40,7 +40,6 @@ public class Storefront {
 
 					} else {
 						System.out.println("No account found.");
-						ScreenPrint.printLogIn();
 					}
 					
 					break;

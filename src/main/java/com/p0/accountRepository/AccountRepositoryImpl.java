@@ -182,23 +182,31 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	}
 
-	public boolean signIn(String username, String password) {
+	public boolean signIn(String username, String password) throws SQLException {
+		boolean validated = false;
 		for (Accounts accounts : findAllAccounts()) {
-			if (accounts.getUsername().equals(username) && accounts.getPassword().equals(password))
+			
+			if (accounts.getUsername().equals(username) && accounts.getPassword().equals(password)) {
+				
 				
 				if(accounts.isAdministrator()) {
-					EmployeeMenu.administratorMenu(username);
-				}
+					EmployeeMenu.administratorMenu(username);}
+				
 				else if (accounts.isEmployee()) {
-					ScreenPrint.printContinueAsEmployee(username);
-					
-				}
+					ScreenPrint.printContinueAsEmployee(username);}
 				else {
+				validated = true;}
+				}
+			else {		
+				validated = false;}	
+			}
+		return validated;
+		
 			
-				return true;}
 
-		}
-		return false;
+		
+		
+		
 
 	}
 
@@ -227,9 +235,9 @@ public class AccountRepositoryImpl implements AccountRepository {
 				e.printStackTrace();
 			}
 		}
-		
 
 	}
+
 	public String checkForSecondaryUser(String username) throws SQLException {
 		String secondaryUser = null;
 		Connection conn = null;
@@ -302,7 +310,8 @@ public class AccountRepositoryImpl implements AccountRepository {
 			stmt = conn.createStatement();
 			set = stmt.executeQuery(SQL);
 			while (set.next()) {
-				accountList.add(new Accounts(set.getDouble(1), set.getString(2), set.getString(3), set.getBoolean(4), set.getBoolean(5), set.getString(6)));
+				accountList.add(new Accounts(set.getDouble(1), set.getString(2), set.getString(3), set.getBoolean(4),
+						set.getBoolean(5), set.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -341,7 +350,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 		newAccount.setUsername(scanner.next());
 		System.out.println("Enter desired password");
 		newAccount.setPassword(scanner.next());
-		System.out.println("Your new account details are " + newAccount);
 		return newAccount;
 	}
 

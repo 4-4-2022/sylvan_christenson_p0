@@ -18,3 +18,4 @@
 15:30:08.627 [main] INFO  com.p0.driver.Driver - Account CreatedAccounts [accountBalance=1200.0, username=Peepo, password=password, accountType=null]
 15:32:04.235 [main] INFO  com.p0.driver.Driver - Account CreatedAccounts [accountBalance=1200.0, username=Peepo, password=password, accountType=null]
 13:27:14.732 [main] INFO  com.p0.service.AccountManagement - 6 was added as a secondary user to 5
+13:05:10.936 [main] INFO  com.p0.service.AccountManagement - 3 was added as a secondary user to 2
