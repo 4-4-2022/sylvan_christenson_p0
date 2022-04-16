@@ -6,10 +6,31 @@ public class Accounts {
 	private String password;
 	private boolean isEmployee;
 	private boolean isAdministrator;
-	private SecondaryUser secondaryUser;
+	private String secondaryUser;
 
 	public Accounts() {
 		super();
+	}
+
+	public Accounts(double accountBalance, String username, String password, boolean isEmployee,
+			boolean isAdministrator) {
+		super();
+		this.accountBalance = accountBalance;
+		this.username = username;
+		this.password = password;
+		this.isEmployee = isEmployee;
+		this.isAdministrator = isAdministrator;
+		
+	}
+	public Accounts(double accountBalance, String username, String password, boolean isEmployee,
+			boolean isAdministrator, String secondaryUser) {
+		super();
+		this.accountBalance = accountBalance;
+		this.username = username;
+		this.password = password;
+		this.isEmployee = isEmployee;
+		this.isAdministrator = isAdministrator;
+		this.secondaryUser = secondaryUser;
 	}
 
 	public Accounts(String username) {
@@ -22,7 +43,7 @@ public class Accounts {
 		this.username = username;
 		this.password = password;
 	}
-	public Accounts(double accountBalance, String username, String password, SecondaryUser secondaryUser) {
+	public Accounts(double accountBalance, String username, String password, String secondaryUser) {
 		super();
 		this.accountBalance = accountBalance;
 		this.username = username;
@@ -64,14 +85,16 @@ public class Accounts {
 
 	@Override
 	public String toString() {
-		return "Accounts [accountBalance=" + accountBalance + ", username=" + username + ", password=" + password;
+		return "Accounts [accountBalance=" + accountBalance + ", username=" + username + ", password=" + password
+				+ ", isEmployee=" + isEmployee + ", isAdministrator=" + isAdministrator + ", secondaryUser="
+				+ secondaryUser + "]";
 	}
 
-	public SecondaryUser getSecondaryUser() {
+	public String getSecondaryUser() {
 		return secondaryUser;
 	}
 
-	public void setSecondaryUser(SecondaryUser secondaryUser) {
+	public void setSecondaryUser(String secondaryUser) {
 		this.secondaryUser = secondaryUser;
 	}
 

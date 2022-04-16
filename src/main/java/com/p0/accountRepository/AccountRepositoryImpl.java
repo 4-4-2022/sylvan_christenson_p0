@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import com.p0.driver.Driver;
 import com.p0.model.Accounts;
 import com.p0.service.AccountManagement;
+import com.p0.service.EmployeeMenu;
+import com.p0.ui.ScreenPrint;
 import com.p0.util.Connector;
 
 public class AccountRepositoryImpl implements AccountRepository {
@@ -183,14 +185,51 @@ public class AccountRepositoryImpl implements AccountRepository {
 	public boolean signIn(String username, String password) {
 		for (Accounts accounts : findAllAccounts()) {
 			if (accounts.getUsername().equals(username) && accounts.getPassword().equals(password))
-
-				return true;
+				
+				if(accounts.isAdministrator()) {
+					EmployeeMenu.administratorMenu(username);
+				}
+				else if (accounts.isEmployee()) {
+					ScreenPrint.printContinueAsEmployee(username);
+					
+				}
+				else {
+			
+				return true;}
 
 		}
 		return false;
 
 	}
 
+	public void deleteAccount(String accountToDelete) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet set = null;
+		final String SQL = "delete from accounts where accounts_username = ?;";
+
+		try {
+
+			conn = Connector.getConnection();
+			stmt = conn.prepareStatement(SQL);
+			stmt.setString(1, accountToDelete);
+			set = stmt.executeQuery();
+			set.next();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+				set.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+
+	}
 	public String checkForSecondaryUser(String username) throws SQLException {
 		String secondaryUser = null;
 		Connection conn = null;
@@ -263,7 +302,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 			stmt = conn.createStatement();
 			set = stmt.executeQuery(SQL);
 			while (set.next()) {
-				accountList.add(new Accounts(set.getDouble(1), set.getString(2), set.getString(3)));
+				accountList.add(new Accounts(set.getDouble(1), set.getString(2), set.getString(3), set.getBoolean(4), set.getBoolean(5), set.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

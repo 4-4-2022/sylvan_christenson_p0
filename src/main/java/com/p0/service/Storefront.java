@@ -1,4 +1,4 @@
-package com.p0.ui;
+package com.p0.service;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.p0.accountRepository.AccountRepositoryImpl;
 import com.p0.ringRepository.RingRepository;
-import com.p0.service.AccountManagement;
+import com.p0.ui.ScreenPrint;
 
 public class Storefront {
 
@@ -18,7 +18,6 @@ public class Storefront {
 	public static void storeFront() throws SQLException {
 
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
-		RingRepository ringRepository = new RingRepository();
 		Scanner scanner = new Scanner(System.in);
 		
 		boolean isUserInterested = true;
@@ -34,6 +33,8 @@ public class Storefront {
 					System.out.println("Enter Password");
 					String password = scanner.next();
 					if (accountRepo.signIn(username, password)) {
+						
+						
 
 						AccountManagement.accountDetailsManagement(username);
 
@@ -52,7 +53,7 @@ public class Storefront {
 					break;
 					
 				default:
-					System.out.println("Invalid Entry");
+					ScreenPrint.printInvalidEntry();
 					break;
 				}
 
