@@ -55,7 +55,18 @@ public class SQL {
 
 		return stmt;
 
-	}}
+	}
+	
+	public PreparedStatement getAccountNameSQL(String username) throws SQLException {
+		String SQL = "select accounts_username from accounts where accounts_username = ?";
+		Connection conn = Connector.getConnection();
+		PreparedStatement stmt = conn.prepareStatement(SQL);
+		stmt.setString(1, username);
+
+		return stmt;
+
+	}
+	}
 
 
 

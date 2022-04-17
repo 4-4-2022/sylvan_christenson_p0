@@ -1,5 +1,6 @@
 package com.p0.accountCreationTest;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class AccountCreationTest {
 	}
 
 	@Test
-	public void testSave() {
+	public void testSave() throws SQLException {
 
 		Accounts newAccount = new Accounts();
 		newAccount.setAccountBalance(500);

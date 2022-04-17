@@ -86,7 +86,7 @@ public class Accounts {
 	}
 	
 	public String toStringNoPass() {
-		return "Account Balance:" + " " + accountBalance + "\n" +  "Username:" + " " + username + "\n" + "Is an Employee:" + " " + isEmployee
+		return "Username:" + " " + username + "\n" + "Account Balance:" + " " + accountBalance + "\n" +  "Is an Employee:" + " " + isEmployee
 				+ "\n" + "Is an Administrator:" + " " + isAdministrator + ""
 						+ "\n" + "Secondary User:" + " " + secondaryUser;
 	}

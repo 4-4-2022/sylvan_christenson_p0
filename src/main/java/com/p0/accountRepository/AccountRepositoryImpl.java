@@ -18,14 +18,29 @@ import com.p0.service.EmployeeMenu;
 import com.p0.ui.ScreenPrint;
 import com.p0.util.Connector;
 import com.p0.util.SQL;
+import com.p0.util.Validation;
 
 public class AccountRepositoryImpl implements AccountRepository {
 	// private static AccountRepositoryImpl accountRepo;
 
 	final static Logger logger = LoggerFactory.getLogger(Driver.class);
 	SQL SQL = new SQL();
-
+	Validation validation = new Validation();
 	private static final ResultSet String = null;
+	
+	
+	
+	public void printAccountList() {
+		
+		for (Accounts account : findAllAccounts()) {
+			System.out.println(account.toStringNoPass());
+			System.out.println("-----------------------");
+			
+		}
+		System.out.println("List complete.");
+		
+		
+	}
 
 	public void getAccountBalance(String username) {
 		for (Accounts account : findAllAccounts()) {
@@ -40,7 +55,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 	public void transfer(String username, String receivingUser, double withdrawAmount) throws SQLException {
 
 		try {
-	
+
 			double previousBalance = SQL.executeQuerySQL(SQL.getAccountBalanceSQL(username)).getDouble(1);
 			double newBalance = (previousBalance - withdrawAmount);
 			if (newBalance < 0) {
@@ -51,12 +66,14 @@ public class AccountRepositoryImpl implements AccountRepository {
 				SQL.updateAccountBalanceSQL(username, newBalance);
 			}
 
-			double previousBalanceReceivingUser = SQL.executeQuerySQL(SQL.getAccountBalanceSQL(receivingUser)).getDouble(1);
+			double previousBalanceReceivingUser = SQL.executeQuerySQL(SQL.getAccountBalanceSQL(receivingUser))
+					.getDouble(1);
 			double newBalanceReceivingUser = (previousBalanceReceivingUser + withdrawAmount);
 			SQL.updateAccountBalanceSQL(receivingUser, newBalanceReceivingUser);
-			logger.info("A successful transfer was completed from" + " " + username + " " + "to" + " " + receivingUser + " " + "for" + " " + withdrawAmount);
+			logger.info("A successful transfer was completed from" + " " + username + " " + "to" + " " + receivingUser
+					+ " " + "for" + " " + withdrawAmount);
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 
@@ -79,26 +96,26 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	public void deposit(String username, double depositAmount) throws SQLException {
 		for (Accounts account : findAllAccounts()) {
-			if (account.getUsername().equalsIgnoreCase(username)) {
+			if (account.getUsername().equals(username)) {
 				double previousBalance = account.getAccountBalance(username);
 				double newBalance = (previousBalance + depositAmount);
-				if(newBalance < 0) {
+				if (validation.isNegative(depositAmount)) { ScreenPrint.printNoNegatives(username);
+				break;
+				}
+				if (newBalance < 0) {
 					System.out.println("Insufficient funds");
 					break;
-				}
-				else {
-					SQL.updateAccountBalanceSQL(username, depositAmount);
-					
-				}
+				} else {
+					SQL.updateAccountBalanceSQL(username, newBalance);
 
-				
-					}
 				}
 
 			}
-	
+		}
 
-	public Accounts checkForAccountSQL(String username) {
+	}
+
+	public Accounts getAccountSQL(String username) {
 		Accounts newAccount = new Accounts();
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -171,10 +188,13 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	}
 
-	public void deleteAccount(String accountToDelete) throws SQLException {
+	public void deleteAccount(String accountToDelete, String username) throws SQLException {
+		if(accountToDelete.equals(username)) {
+			System.out.println("You cannot delete your own account");
+			return;
+		}
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		ResultSet set = null;
 		final String SQL = "delete from accounts where accounts_username = ?;";
 
 		try {
@@ -182,8 +202,8 @@ public class AccountRepositoryImpl implements AccountRepository {
 			conn = Connector.getConnection();
 			stmt = conn.prepareStatement(SQL);
 			stmt.setString(1, accountToDelete);
-			set = stmt.executeQuery();
-			set.next();
+			stmt.execute(SQL);
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,7 +211,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 			try {
 				conn.close();
 				stmt.close();
-				set.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -289,33 +308,30 @@ public class AccountRepositoryImpl implements AccountRepository {
 		return accountList;
 	}
 
-	public Accounts getNewAccountInfo(String usernameProvided) {
+	public Accounts getNewAccountInfo() throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		Accounts newAccount = new Accounts();
-		System.out.println("Enter an amount you wish to deposit initially to this new account account.");
-		newAccount.setAccountBalance(scanner.nextDouble());
-		System.out.println("New account username = " + usernameProvided);
-		newAccount.setUsername(usernameProvided);
-		System.out.println("Enter desired password");
-		newAccount.setPassword(scanner.next());
-		System.out.println("Your new account details are " + newAccount);
-		return newAccount;
-	}
-
-	public Accounts getNewAccountInfo() {
-		Scanner scanner = new Scanner(System.in);
-		Accounts newAccount = new Accounts();
-		System.out.println("Enter an amount you wish to deposit initially to this new account account.");
-		newAccount.setAccountBalance(scanner.nextDouble());
-		System.out.println("Enter new account username");
+		System.out.println("Enter the username for this account");
 		newAccount.setUsername(scanner.next());
-		System.out.println("Enter desired password");
-		newAccount.setPassword(scanner.next());
-		return newAccount;
+		if (validation.accountExists(newAccount.getUsername())) {return null;
+	
+		} else {
+			System.out.println("Enter an amount you wish to deposit initially to this new account account.");
+			newAccount.setAccountBalance(scanner.nextDouble());
+			System.out.println("Enter desired password");
+			newAccount.setPassword(scanner.next());
+			System.out.println("New account username = " + newAccount.getUsername());
+			System.out.println("Your new account details are " + newAccount.toStringNoPass());
+			return newAccount;
+			
+		}
 	}
 
 	public void save(Accounts newAccount) {
-
+		if (newAccount == null) {
+			System.out.println("Account already exists. Account was not created");
+			return;
+		}
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		final String SQL = "insert into accounts values( ?, ?, ?, ?, ?)";
@@ -336,6 +352,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 			try {
 				conn.close();
 				stmt.close();
+				System.out.println("Account Created Successfully");
 			} catch (SQLException e) {
 
 			}

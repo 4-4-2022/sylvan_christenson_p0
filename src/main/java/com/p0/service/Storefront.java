@@ -19,7 +19,7 @@ public class Storefront {
 
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 		Scanner scanner = new Scanner(System.in);
-		
+
 		boolean isUserInterested = true;
 		do {
 			try {
@@ -27,48 +27,42 @@ public class Storefront {
 				int userSelection = scanner.nextInt();
 				switch (userSelection) {
 				case 1:
+					// Users is prompted to sign in using a username and password.
 					System.out.println("Enter Username");
 					String username = scanner.next();
 					System.out.println("Enter Password");
 					String password = scanner.next();
 					if (accountRepo.signIn(username, password)) {
-						
-						
-
 						AccountManagement.accountDetailsManagement(username);
-
 					} else {
 						System.out.println("No account found.");
 					}
-					
 					break;
 				case 2:
+					// Users are prompted to create a new account.
 					accountRepo.save(accountRepo.getNewAccountInfo());
-					System.out.println("Account Created Successfully");
+				
 					break;
 				case 3:
 					isUserInterested = false;
 					break;
-					
+
 				default:
 					ScreenPrint.printInvalidEntry();
 					break;
 				}
-				scanner.close();
+				
 			} catch (InputMismatchException invalidEntry) {
 				System.out.println(
 						"Invalid Entry: Please type only the number associated with your decision and then press enter.");
 
-			}
-			catch (NoSuchElementException invalidEntry) {
+			} catch (NoSuchElementException invalidEntry) {
 				System.err.println("Error");
 				invalidEntry.printStackTrace();
 				System.exit(0);
-				
 
 			}
 
-		}
-		while (isUserInterested);
+		} while (isUserInterested);
 	}
 }

@@ -1,4 +1,4 @@
-package com.p0.util;
+package com.p0.serialization;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
