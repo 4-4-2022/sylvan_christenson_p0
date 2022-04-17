@@ -40,6 +40,14 @@ public class Rings {
 
 
 
+	public Rings() {
+		
+	}
+
+
+
+
+
 	public String getItemName() {
 		return itemName;
 	}
@@ -164,7 +172,11 @@ public class Rings {
 		this.price = price;
 	}
 
-
+	public String toStringNoOwner() {
+		return  "Name:" + itemName + "\n" + "Material:" +" " + material + "\n" + "Gem:" + " " +  gem + "\n" +"Jeweler:" + " " + jeweler
+				+ "\n" + "Engraving:" + " " + engraving + "\n" +
+				"Price:" + price;
+	}
 	@Override
 	public String toString() {
 		return "Rings [itemName=" + itemName + ", material=" + material + ", gem=" + gem + ", jeweler=" + jeweler

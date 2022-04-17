@@ -165,7 +165,7 @@ public class ScreenPrint {
 
 		System.out.println("Welcome to Peppies' Rings and Things");
 		System.out.println("What would you like to do in the Jeweler's Shop");
-		System.out.println("1) Browse all currently available wares");
+		System.out.println("1) Browse all currently available rings");
 		System.out.println("2) Search for rings by material.");
 		System.out.println("3) Search for rings by gem");
 		System.out.println("4) Search for rings by jeweler");

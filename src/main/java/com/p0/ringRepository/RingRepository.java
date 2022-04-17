@@ -9,7 +9,7 @@ public interface RingRepository {
 	
 	public void seeMenu();
 	public void giveRing(String receivingUser);
-	public void customRing();
+	public Rings customRing();
 	public void buyRing();
 	public void setEngraving();
 	public void printRings();

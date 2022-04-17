@@ -3,6 +3,7 @@ package com.p0.driver;
 import java.sql.SQLException;
 
 import com.p0.accountRepository.AccountRepositoryImpl;
+import com.p0.service.JewelerShop;
 import com.p0.service.Storefront;
 import com.p0.ui.ScreenPrint;
 import com.p0.util.SQL;
@@ -14,8 +15,8 @@ public class Driver {
 		Validation validation = new Validation();
 		SQL SQL = new SQL();
 		ScreenPrint screenPrint = new ScreenPrint();
-		
-		Storefront.storeFront();
+		JewelerShop.shopMainMenu("Peppies");
+		//Storefront.storeFront();
 		// System.out.println("Farewell.");
 
 	}
