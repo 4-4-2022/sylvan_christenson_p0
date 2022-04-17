@@ -6,6 +6,7 @@ import java.util.Scanner;
 import javax.security.auth.callback.ConfirmationCallback;
 
 import com.p0.accountRepository.AccountRepositoryImpl;
+import com.p0.model.Accounts;
 import com.p0.ui.ScreenPrint;
 
 public class EmployeeMenu {
@@ -167,10 +168,14 @@ public class EmployeeMenu {
 						singleAccountEdit(username, userToView);
 
 					case 2:
-						System.out.println(accountRepo.findAllAccounts());
+						for(Accounts account : accountRepo.findAllAccounts()) {
+							System.out.println(account.toStringNoPass());
+							
+						}
 						break;
 
-					case 3:
+					case 3: Storefront.storeFront();
+					
 
 					default:
 						ScreenPrint.printInvalidEntry();

@@ -9,53 +9,71 @@ import org.slf4j.LoggerFactory;
 
 import com.p0.accountRepository.AccountRepositoryImpl;
 import com.p0.ui.ScreenPrint;
+import com.p0.util.SQL;
+import com.p0.util.Validation;
 
 public class AccountManagement {
 	private static final Logger logger = LoggerFactory.getLogger(AccountManagement.class);
 
 	static AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
+	ServiceSelection serviceSelection = new ServiceSelection();
 
 	public static void accountDetailsManagement(String usernameInput) throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		String username = usernameInput;
-		
+		Validation validation = new Validation();
+
 		boolean isUserInterested = true;
 
 		try {
 
 			while (isUserInterested) {
+				SQL SQL = new SQL();
 				ScreenPrint.printAccountManagement(username);
 				int userSelection = scanner.nextInt();
 				switch (userSelection) {
 
 				case 1:
 					accountRepo.save(accountRepo.getNewAccountInfo());
-					ScreenPrint.printAccountManagement(username);
 					break;
 				case 2:
 					System.out.println("Please enter an amount you wish to withdraw.");
 					double withdrawAmount = scanner.nextDouble();
+					if (validation.isNegative(withdrawAmount)) {
+						System.out.println("No negative values allowed.");
+						break;
+					}
 					accountRepo.withdraw(username, withdrawAmount);
 					accountDetailsManagement(usernameInput);
 				case 3:
 					System.out.println("Please enter an amount you wish to deposit.");
 					double depositAmount = scanner.nextDouble();
+					if (validation.isNegative(depositAmount)) {
+						System.out.println("No negative values allowed.");
+						break;
+					}
 					accountRepo.deposit(username, depositAmount);
 					accountDetailsManagement(usernameInput);
 				case 4:
 					System.out.println("Please enter the username of the account you wish to transfer funds to");
 					String recveivingUser = scanner.next();
-					if (accountRepo.checkForAccount(recveivingUser) == null) {
+					
+					if (SQL.executeQuerySQL(SQL.getAccountStatusSQL(recveivingUser)).getString(1) == null) {
 
 						while (isUserInterested) {
 							ScreenPrint.printNoTransferUserFound(recveivingUser);
 							int userChoice = scanner.nextInt();
 							switch (userChoice) {
-							case 1:break;
+							case 1:
+								break;
 							case 2:
-								accountRepo.getNewAccountInfo(username);
-							case 3:
+								accountRepo.save(accountRepo.getNewAccountInfo());
+
 								isUserInterested = false;
+								break;
+							case 3:
+								ServiceSelection serviceSelection = new ServiceSelection();
+								serviceSelection.serviceSelction(username);
 								break;
 							default:
 								ScreenPrint.printInvalidEntry();
@@ -64,17 +82,32 @@ public class AccountManagement {
 							}
 
 						}
+						System.out.println(
+								"Please enter an amount you wish to transfer to the account:" + " " + recveivingUser);
+						double transferAmount = scanner.nextDouble();
+						if (validation.isNegative(transferAmount)) {
+							System.out.println("No negative values allowed.");
+							break;
+						}
+						accountRepo.transfer(username, recveivingUser, transferAmount);
+						break;
 
 					} else {
-						System.out.println("Please enter an amount you wish to transfer to the account:" + " " + recveivingUser);
+						System.out.println(
+								"Please enter an amount you wish to transfer to the account:" + " " + recveivingUser);
 						double transferAmount = scanner.nextDouble();
+						if (validation.isNegative(transferAmount)) {
+							System.out.println("No negative values allowed.");
+							break;
+						}
 						accountRepo.transfer(username, recveivingUser, transferAmount);
-						ScreenPrint.printAccountManagement(username);
-						break;
+						
+
 					}
+					
+					ScreenPrint.printTransactionSuccessful();
 					break;
 				case 5:
-					ScreenPrint.printAccountManagement(username);
 					accountRepo.getAccountBalance(username);
 					break;
 				case 6:
@@ -109,13 +142,17 @@ public class AccountManagement {
 
 						e.printStackTrace();
 					}
+					ScreenPrint.printTransactionSuccessful();
 					break;
 				case 8:
-					System.out.println("You are attempting to exit the program completely. Would you like to continue?");
+					System.out
+							.println("You are attempting to exit the program completely. Would you like to continue?");
 					if (EmployeeMenu.confirmation()) {
-					System.out.println("Farewell. Program Exited");
-					System.exit(0);}
-					else {break;}
+						System.out.println("Farewell. Program Exited");
+						System.exit(0);
+					} else {
+						break;
+					}
 
 				default:
 					System.out.println("Invalid Entry");

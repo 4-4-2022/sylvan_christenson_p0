@@ -2,13 +2,13 @@ package com.p0.service;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.p0.accountRepository.AccountRepositoryImpl;
-import com.p0.ringRepository.RingRepository;
 import com.p0.ui.ScreenPrint;
 
 public class Storefront {
@@ -23,7 +23,6 @@ public class Storefront {
 		boolean isUserInterested = true;
 		do {
 			try {
-				
 				ScreenPrint.printLogIn();
 				int userSelection = scanner.nextInt();
 				switch (userSelection) {
@@ -55,11 +54,18 @@ public class Storefront {
 					ScreenPrint.printInvalidEntry();
 					break;
 				}
-
+				scanner.close();
 			} catch (InputMismatchException invalidEntry) {
 				System.out.println(
 						"Invalid Entry: Please type only the number associated with your decision and then press enter.");
-				Storefront.storeFront();
+
+			}
+			catch (NoSuchElementException invalidEntry) {
+				System.err.println("Error");
+				invalidEntry.printStackTrace();
+				System.exit(0);
+				
+
 			}
 
 		}

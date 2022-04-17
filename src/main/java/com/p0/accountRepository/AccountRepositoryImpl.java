@@ -14,15 +14,16 @@ import org.slf4j.LoggerFactory;
 
 import com.p0.driver.Driver;
 import com.p0.model.Accounts;
-import com.p0.service.AccountManagement;
 import com.p0.service.EmployeeMenu;
 import com.p0.ui.ScreenPrint;
 import com.p0.util.Connector;
+import com.p0.util.SQL;
 
 public class AccountRepositoryImpl implements AccountRepository {
 	// private static AccountRepositoryImpl accountRepo;
 
 	final static Logger logger = LoggerFactory.getLogger(Driver.class);
+	SQL SQL = new SQL();
 
 	private static final ResultSet String = null;
 
@@ -36,7 +37,32 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	}
 
-	public void transfer(String username, String receivingUser, double withdrawAmount) {
+	public void transfer(String username, String receivingUser, double withdrawAmount) throws SQLException {
+
+		try {
+	
+			double previousBalance = SQL.executeQuerySQL(SQL.getAccountBalanceSQL(username)).getDouble(1);
+			double newBalance = (previousBalance - withdrawAmount);
+			if (newBalance < 0) {
+				System.out.println("Insufficient funds");
+				return;
+			} else {
+
+				SQL.updateAccountBalanceSQL(username, newBalance);
+			}
+
+			double previousBalanceReceivingUser = SQL.executeQuerySQL(SQL.getAccountBalanceSQL(receivingUser)).getDouble(1);
+			double newBalanceReceivingUser = (previousBalanceReceivingUser + withdrawAmount);
+			SQL.updateAccountBalanceSQL(receivingUser, newBalanceReceivingUser);
+			logger.info("A successful transfer was completed from" + " " + username + " " + "to" + " " + receivingUser + " " + "for" + " " + withdrawAmount);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+
+	}
+
+	public void withdraw(String username, double withdrawAmount) throws SQLException {
 		for (Accounts account : findAllAccounts()) {
 			if (account.getUsername().equals(username)) {
 				double previousBalance = account.getAccountBalance(username);
@@ -45,135 +71,75 @@ public class AccountRepositoryImpl implements AccountRepository {
 					System.out.println("Insufficient funds");
 					break;
 				} else {
-					Connection conn = null;
-					PreparedStatement stmt = null;
-					final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
-
-					try {
-
-						conn = Connector.getConnection();
-						stmt = conn.prepareStatement(SQL);
-						stmt.setDouble(1, newBalance);
-						stmt.setString(2, username);
-						stmt.execute();
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					} finally {
-						try {
-							conn.close();
-							stmt.close();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-					}
-
-				}
-			} else if (account.getUsername().equals(receivingUser)) {
-				double previousBalance = account.getAccountBalance(username);
-				double newBalance2 = (previousBalance + withdrawAmount);
-
-				Connection conn = null;
-				PreparedStatement stmt = null;
-				final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
-
-				try {
-
-					conn = Connector.getConnection();
-					stmt = conn.prepareStatement(SQL);
-					stmt.setDouble(1, newBalance2);
-					stmt.setString(2, receivingUser);
-					stmt.execute();
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						conn.close();
-						stmt.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-
-			}
-
-		}
-	}
-
-	public void withdraw(String username, double withdrawAmount) {
-		for (Accounts account : findAllAccounts()) {
-			if (account.getUsername().equals(username)) {
-				double previousBalance = account.getAccountBalance(username);
-				double newBalance = (previousBalance - withdrawAmount);
-				if (newBalance < 0) {
-					System.out.println("Insufficient funds");
-					break;
-				} else {
-					Connection conn = null;
-					PreparedStatement stmt = null;
-					final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
-
-					try {
-
-						conn = Connector.getConnection();
-						stmt = conn.prepareStatement(SQL);
-						stmt.setDouble(1, newBalance);
-						stmt.setString(2, username);
-						stmt.execute();
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					} finally {
-						try {
-							conn.close();
-							stmt.close();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-					}
-
+					SQL.updateAccountBalanceSQL(username, newBalance);
 				}
 			}
 		}
 	}
 
-	public void deposit(String username, double depositAmount) {
+	public void deposit(String username, double depositAmount) throws SQLException {
 		for (Accounts account : findAllAccounts()) {
 			if (account.getUsername().equalsIgnoreCase(username)) {
 				double previousBalance = account.getAccountBalance(username);
 				double newBalance = (previousBalance + depositAmount);
+				if(newBalance < 0) {
+					System.out.println("Insufficient funds");
+					break;
+				}
+				else {
+					SQL.updateAccountBalanceSQL(username, depositAmount);
+					
+				}
 
-				Connection conn = null;
-				PreparedStatement stmt = null;
-				final String SQL = "update accounts set accounts_accountbalance = ? where accounts_username = ?";
-
-				try {
-
-					conn = Connector.getConnection();
-					stmt = conn.prepareStatement(SQL);
-					stmt.setDouble(1, newBalance);
-					stmt.setString(2, username);
-					stmt.execute();
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					try {
-						conn.close();
-						stmt.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
+				
 					}
 				}
 
 			}
+	
+
+	public Accounts checkForAccountSQL(String username) {
+		Accounts newAccount = new Accounts();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet set = null;
+		final String SQL = "select * from accounts where accounts_username = ?;";
+
+		try {
+
+			conn = Connector.getConnection();
+			stmt = conn.prepareStatement(SQL);
+			stmt.setString(1, username);
+			set = stmt.executeQuery();
+			while (set.next()) {
+
+				newAccount.setAccountBalance(set.getDouble(1));
+				newAccount.setUsername(set.getString(2));
+				newAccount.setPassword(set.getString(3));
+				newAccount.setEmployee(set.getBoolean(4));
+				newAccount.setAdministrator(set.getBoolean(5));
+				newAccount.setSecondaryUser(set.getString(6));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+				set.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		return newAccount;
+
 	}
 
 	public Accounts checkForAccount(String username) {
 		for (Accounts accounts : findAllAccounts()) {
-			if (accounts.getUsername().equalsIgnoreCase(username))
+			if (accounts.getUsername().equals(username))
 
 				return accounts;
 
@@ -185,28 +151,23 @@ public class AccountRepositoryImpl implements AccountRepository {
 	public boolean signIn(String username, String password) throws SQLException {
 		boolean validated = false;
 		for (Accounts accounts : findAllAccounts()) {
-			
-			if (accounts.getUsername().equals(username) && accounts.getPassword().equals(password)) {
-				
-				
-				if(accounts.isAdministrator()) {
-					EmployeeMenu.administratorMenu(username);}
-				
-				else if (accounts.isEmployee()) {
-					ScreenPrint.printContinueAsEmployee(username);}
-				else {
-				validated = true;}
-				}
-			else {		
-				validated = false;}	
-			}
-		return validated;
-		
-			
 
-		
-		
-		
+			if (accounts.getUsername().equals(username) && accounts.getPassword().equals(password)) {
+
+				if (accounts.isAdministrator()) {
+					EmployeeMenu.administratorMenu(username);
+				}
+
+				else if (accounts.isEmployee()) {
+					ScreenPrint.printContinueAsEmployee(username);
+				} else {
+					validated = true;
+				}
+			} else {
+				validated = false;
+			}
+		}
+		return validated;
 
 	}
 

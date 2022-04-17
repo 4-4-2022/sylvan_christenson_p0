@@ -17,6 +17,11 @@ public class Rings {
 
 
 
+	
+
+
+
+
 
 	public Rings(String itemName, String material, String gem, String jeweler, String engraving, String currentOwner,
 			String previousOwner, double price) {
@@ -158,18 +163,6 @@ public class Rings {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
-
-
-
-
-	public Rings(String itemname, String material, String gem, String jeweler, String engraving, String currentOwner,
-			String previousOwner, double double1) {
-		// TODO Auto-generated constructor stub
-	}
-
-
-
 
 
 	@Override
