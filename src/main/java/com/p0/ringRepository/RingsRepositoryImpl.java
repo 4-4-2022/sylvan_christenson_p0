@@ -9,15 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.p0.accountRepository.AccountRepositoryImpl;
 import com.p0.model.Accounts;
 import com.p0.model.Rings;
+import com.p0.service.AccountManagement;
 import com.p0.util.Connector;
+import com.p0.util.SQL;
 
 public class RingsRepositoryImpl implements RingRepository {
-
+	private static final Logger logger = LoggerFactory.getLogger(AccountManagement.class);
+	public static SQL sql = new SQL();
+	public AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 	public Scanner scanner = new Scanner(System.in);
 	public void printRingList(List<Rings> ringList) {
-
+		
 		for (Rings ring : ringList) {
 			System.out.println(ring.toStringNoOwner());
 			System.out.println("-----------------------");
@@ -61,7 +69,12 @@ public class RingsRepositoryImpl implements RingRepository {
 
 	}
 
-	public void buyRing(String ringName) {
+	public void buyRing(double price, String username) throws SQLException {
+		accountRepo.withdraw(username, price);
+		if(sql.executeQuerySQL(sql.getAccountBalanceSQL(username)).getDouble(1) > price) {
+		logger.info(username + " " + "purchased a ring for" + " " + price + ".");}
+		
+		
 
 	}
 	
@@ -183,19 +196,18 @@ public class RingsRepositoryImpl implements RingRepository {
 
 	}
 
-	public Rings findSingleRing(String column, String variable) {
+	public Rings findSingleRing( String itemName) {
 		Rings ring = new Rings();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
-		final String SQL = "select * from rings where ? = ?;";
+		final String SQL = "select * from rings where rings_itemname = ?;";
 
 		try {
 
 			conn = Connector.getConnection();
 			stmt = conn.prepareStatement(SQL);
-			stmt.setString(1, column);
-			stmt.setString(1, variable);
+			stmt.setString(1, itemName);
 			set = stmt.executeQuery();
 			while (set.next()) {
 
@@ -263,7 +275,9 @@ public class RingsRepositoryImpl implements RingRepository {
 
 	@Override
 	public void buyRing() {
-		// TODO Auto-generated method stub
+		
+		
+		
 
 	}
 

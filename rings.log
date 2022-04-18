@@ -1,23 +1,6 @@
-14:18:24.235 [main] INFO  com.p0.ui.Storefront - The retrieved cupcakes are: Rings [material=Iron, gem=Ruby, jeweler=Peppies, itemName=Iron Band, price=50.0]
-14:20:55.189 [main] INFO  com.p0.ui.Storefront - The retrieved rings are: Rings [material=Iron, gem=Ruby, jeweler=Peppies, itemName=Iron Band, price=50.0]
-14:25:52.581 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1200.0, username=biscuit, password=password, accountType=null]
-14:48:28.188 [main] INFO  com.p0.ui.Storefront - The retrieved rings are: Rings [material=Silver, gem=Ruby, jeweler=Peppies, itemName=Silver Band, price=150.0]
-14:50:52.163 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=200.0, username=Defy, password=password, accountType=null]
-15:40:29.570 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1200.0, username=biscuit, password=password, accountType=null]
-15:58:35.993 [main] INFO  com.p0.driver.Driver - [Accounts [accountBalance=0.0, username=Peppies, password=password, accountType=null], Accounts [accountBalance=0.0, username=Dolan, password=password, accountType=null], Accounts [accountBalance=0.0, username=Gooby, password=password, accountType=null], Accounts [accountBalance=0.0, username=Pegas, password=password, accountType=null]]
-16:00:00.285 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=5000.0, username=test, password=password, accountType=null]
-16:00:04.076 [main] INFO  com.p0.driver.Driver - [Accounts [accountBalance=0.0, username=Peppies, password=password, accountType=null], Accounts [accountBalance=0.0, username=Dolan, password=password, accountType=null], Accounts [accountBalance=0.0, username=Gooby, password=password, accountType=null], Accounts [accountBalance=0.0, username=Pegas, password=password, accountType=null], Accounts [accountBalance=0.0, username=Peppies, password=password, accountType=null], Accounts [accountBalance=0.0, username=Dolan, password=password, accountType=null], Accounts [accountBalance=0.0, username=Gooby, password=password, accountType=null], Accounts [accountBalance=0.0, username=Pegas, password=password, accountType=null], Accounts [accountBalance=5000.0, username=test, password=password, accountType=null]]
-16:01:06.712 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=70.0, username=big, password=facts, accountType=null]
-16:01:08.454 [main] INFO  com.p0.driver.Driver - [Accounts [accountBalance=0.0, username=Peppies, password=password, accountType=null], Accounts [accountBalance=0.0, username=Dolan, password=password, accountType=null], Accounts [accountBalance=0.0, username=Gooby, password=password, accountType=null], Accounts [accountBalance=0.0, username=Pegas, password=password, accountType=null], Accounts [accountBalance=0.0, username=Peppies, password=password, accountType=null], Accounts [accountBalance=0.0, username=Dolan, password=password, accountType=null], Accounts [accountBalance=0.0, username=Gooby, password=password, accountType=null], Accounts [accountBalance=0.0, username=Pegas, password=password, accountType=null], Accounts [accountBalance=70.0, username=big, password=facts, accountType=null]]
-16:40:16.654 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1500.0, username=biscuit, password=password, accountType=null]
-16:41:28.612 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1500.0, username=biscuit, password=password, accountType=null]
-08:34:35.303 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1200.0, username=Biscuit, password=password, accountType=null]
-14:58:59.189 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=200.0, username=test, password=password, accountType=null]
-15:17:43.613 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1200.0, username=Peepo, password=password, accountType=null]
-15:20:33.494 [main] INFO  com.p0.service.AccountManagement - Account CreatedAccounts [accountBalance=1200.0, username=Peepo, password=password, accountType=null]
-15:30:08.627 [main] INFO  com.p0.driver.Driver - Account CreatedAccounts [accountBalance=1200.0, username=Peepo, password=password, accountType=null]
-15:32:04.235 [main] INFO  com.p0.driver.Driver - Account CreatedAccounts [accountBalance=1200.0, username=Peepo, password=password, accountType=null]
-13:27:14.732 [main] INFO  com.p0.service.AccountManagement - 6 was added as a secondary user to 5
-13:05:10.936 [main] INFO  com.p0.service.AccountManagement - 3 was added as a secondary user to 2
-20:42:00.422 [main] INFO  com.p0.driver.Driver - A successful transfer was completed from Peppies  to Sylvan for 50.0
-10:12:14.916 [main] INFO  com.p0.driver.Driver - A successful transfer was completed from Peppies to Tekkaman for 100.0
+
+17:56:18.618 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 50.0.
+17:56:45.303 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.
+17:57:02.763 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.
+17:57:43.200 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.
+18:04:59.458 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.

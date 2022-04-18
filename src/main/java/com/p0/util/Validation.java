@@ -9,7 +9,11 @@ import com.p0.ui.ScreenPrint;
 
 public class Validation {
 	SQL SQL = new SQL();
-	
+	public static Scanner scanner = new Scanner(System.in);
+	public String takeUserInput() {
+		String input = scanner.nextLine();
+		return input;
+	}
 	public boolean confirmation() {
 		System.out.println("1) Yes               2)No");
 		Scanner scanner = new Scanner(System.in);
