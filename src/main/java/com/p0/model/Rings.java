@@ -173,7 +173,7 @@ public class Rings {
 	}
 
 	public String toStringNoOwner() {
-		return  "Name:" + itemName + "\n" + "Material:" +" " + material + "\n" + "Gem:" + " " +  gem + "\n" +"Jeweler:" + " " + jeweler
+		return  "Name:" + " " + itemName + "\n" + "Material:" +" " + material + "\n" + "Gem:" + " " +  gem + "\n" +"Jeweler:" + " " + jeweler
 				+ "\n" + "Engraving:" + " " + engraving + "\n" +
 				"Price:" + price;
 	}

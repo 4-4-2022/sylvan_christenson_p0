@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.p0.accountRepository.AccountRepositoryImpl;
+import com.p0.ringRepository.RingsRepositoryImpl;
 import com.p0.ui.ScreenPrint;
 import com.p0.util.Validation;
 
@@ -15,14 +16,18 @@ public class EmployeeMenu {
 	public static void singleAccountEditEmployee(String username, String userToView) throws SQLException {
 		Scanner scanner = new Scanner(System.in);
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
-		ScreenPrint.printEmployeeMenuSingleAccount(username, userToView);
 		boolean userInterested = true;
 		while (userInterested) {
+			ScreenPrint.printEmployeeMenuSingleAccount(username, userToView);
 			int userSelection = scanner.nextInt();
 			switch (userSelection) {
 
 			case 1:
 				System.out.println("This will permanently delete this account. Are you sure?");
+				if(accountRepo.checkForAccount(userToView).isAdministrator()) {
+					System.out.println("You cannot delete an administrator account.");
+					break;
+				}
 				if (validation.confirmation(validation.getConfirmation())) {
 					accountRepo.deleteAccount(userToView, username);
 				} else {
@@ -73,11 +78,12 @@ public class EmployeeMenu {
 
 	}
 
-	public static void employeeMenu(String username, Scanner scanner) throws SQLException {
+	public static void employeeMenu(String username) throws SQLException {
 		Validation val = new Validation();
 		ServiceSelection serviceSelection = new ServiceSelection();
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 		ScreenPrint.printContinueAsEmployee(username);
+		Scanner scanner = new Scanner(System.in);
 		boolean hasNotChosen = true;
 		while (hasNotChosen) {
 			int userSelection = scanner.nextInt();
@@ -127,6 +133,7 @@ public class EmployeeMenu {
 		Validation val = new Validation();
 		ServiceSelection serviceSelection = new ServiceSelection();
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
+		RingsRepositoryImpl ringRepo = new RingsRepositoryImpl();
 		Scanner scanner = new Scanner(System.in);
 		ScreenPrint.printContinueAsAdmin(username);
 		boolean hasNotChosen = true;
@@ -161,6 +168,9 @@ public class EmployeeMenu {
 					case 4:
 						serviceSelection.serviceSelction(username);
 						break;
+					case 5:
+						ringRepo.saveRingToRings(ringRepo.newRing());
+						break;
 					
 						
 
@@ -172,7 +182,7 @@ public class EmployeeMenu {
 				}
 
 			case 3:
-				employeeMenu(username, scanner);
+				employeeMenu(username);
 
 			default:
 				ScreenPrint.printInvalidEntry();

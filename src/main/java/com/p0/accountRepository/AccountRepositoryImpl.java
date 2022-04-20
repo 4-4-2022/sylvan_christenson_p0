@@ -106,7 +106,6 @@ public class AccountRepositoryImpl {
 			return;
 
 		}
-		ScreenPrint.printTransactionSuccessful();
 		return;
 	}
 
@@ -128,6 +127,7 @@ public class AccountRepositoryImpl {
 					.getDouble(1);
 			double newBalanceReceivingUser = (previousBalanceReceivingUser + withdrawAmount);
 			SQL.updateAccountBalanceSQL(receivingUser, newBalanceReceivingUser);
+			ScreenPrint.printTransactionSuccessful();
 			logger.info(username + " " + "transfered" + withdrawAmount + " " + " to" + " " + receivingUser);
 		} catch (SQLException e) {
 
@@ -276,7 +276,7 @@ public class AccountRepositoryImpl {
 
 				else if (accounts.isEmployee()) {
 					logger.info(username + " " + "has logged in successfully as an employee.");
-					ScreenPrint.printContinueAsEmployee(username);
+					EmployeeMenu.employeeMenu(username);
 				} else {
 				}
 			} else {
@@ -341,7 +341,6 @@ public class AccountRepositoryImpl {
 
 			} else {
 				System.out.println("Account already has a secondary user");
-				ScreenPrint.printAccountManagement(usernameInput);
 
 			}
 

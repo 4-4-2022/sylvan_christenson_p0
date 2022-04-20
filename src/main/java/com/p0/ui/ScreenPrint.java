@@ -55,10 +55,10 @@ public class ScreenPrint {
 		System.out.println("3) Deposit");
 		System.out.println("4) Transfer");
 		System.out.println("5) Check Balance");
-		System.out.println("6) Return to Log In menu to sign in with a different account.");
-		System.out.println("7) Add an account as a secondary user.");
+		System.out.println("6) Return to Log In menu to sign in with a different account");
+		System.out.println("7) Add an account as a secondary user");
 		System.out.println("8) Exit Program");
-		System.out.println("9) Enter the shop.");
+		System.out.println("9) Enter the shop");
 
 	}
 
@@ -96,6 +96,7 @@ public class ScreenPrint {
 		System.out.println("2) View a list of all accounts.");
 		System.out.println("3) Return to Sign In menu");
 		System.out.println("4) Enter the shop.");
+		System.out.println("5) Add a ring to the menu.");
 	}
 
 	public static void printEmployeeMenu(String username) {

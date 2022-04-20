@@ -66,13 +66,22 @@ public class RingsRepositoryImpl{
 	
 	public Rings newRing() {
 		Rings newRing = new Rings();
+		System.out.println("What is the name of this ring?");
+		newRing.setItemName(scanner.nextLine());
 		System.out.println("Who would you like to make this ring?");
-		newRing.setJeweler(scanner.next());
+		newRing.setJeweler(scanner.nextLine());
 		System.out.println("What material would you like this ring to be made out of?");
-		newRing.setMaterial(scanner.next());
+		newRing.setMaterial(scanner.nextLine());
 		System.out.println("What type of gem would you like to be placed in this ring?");
-		newRing.setGem(scanner.next());
-		
+		newRing.setGem(scanner.nextLine());
+		System.out.println("What engraving would you like placed on this ring?");
+		newRing.setEngraving(scanner.nextLine());
+		System.out.println("Who was the previous owner of this ring?");
+		newRing.setPreviousOwner(scanner.nextLine());
+		System.out.println("Who is the current owner of this ring?");
+		newRing.setCurrentOwner(scanner.nextLine());
+		System.out.println("What is the price of this ring?");
+		newRing.setPrice(scanner.nextDouble());
 		return newRing;
 		
 		
@@ -343,7 +352,8 @@ public void saveRingToRings(Rings newRing) {
 			try {
 				conn.close();
 				stmt.close();
-				System.out.println("Ring added to order list Successfully");
+				System.out.println( newRing.getItemName() + " added to ring menu successfully.");
+				logger.info(newRing.getItemName() + " added to ring menu successfully.");
 			} catch (SQLException e) {
 
 			}
