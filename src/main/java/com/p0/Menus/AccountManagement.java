@@ -45,6 +45,7 @@ public class AccountManagement {
 					break;
 				case 6:
 					Storefront.storeFront();
+					break;
 				case 7:
 					accountRepo.secondaryUser(usernameInput);
 					break;

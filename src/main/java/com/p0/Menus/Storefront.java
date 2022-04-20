@@ -11,6 +11,7 @@ import com.p0.util.Validation;
 
 public class Storefront {
 
+	public static Validation validation = new Validation();
 
 
 		public static void storeFront() throws SQLException {
@@ -31,7 +32,7 @@ public class Storefront {
 						accountRepo.createAccount();
 						break;
 					case 3:
-						isUserInterested = false;
+						validation.exitProgram();
 						break;
 
 					default:

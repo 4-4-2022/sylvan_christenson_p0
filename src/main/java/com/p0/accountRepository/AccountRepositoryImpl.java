@@ -245,14 +245,14 @@ public class AccountRepositoryImpl {
 	public void signIn() throws SQLException {
 
 		System.out.println("Enter Username");
-		String username = scanner.next();
+		String username = scanner.nextLine();
 		if (validation.accountExists(username) == false) {
 			System.out.println("No account found.");
 			return;
 		}
 
 		System.out.println("Enter Password");
-		String password = scanner.next();
+		String password = scanner.nextLine();
 		if (authenticate(username, password)) {
 			accountManagement.accountDetailsManagement(username);
 		} else {
@@ -278,6 +278,8 @@ public class AccountRepositoryImpl {
 					logger.info(username + " " + "has logged in successfully as an employee.");
 					EmployeeMenu.employeeMenu(username);
 				} else {
+					return validated;
+				
 				}
 			} else {
 				validated = false;
@@ -458,14 +460,14 @@ public class AccountRepositoryImpl {
 	public void createAccount() throws SQLException {
 
 		System.out.println("Enter Username");
-		String newUsername = scanner.next();
+		String newUsername = scanner.nextLine();
 		if (validation.accountExists(newUsername)) {
 			System.out.println("Account already exists. Account was not created");
 			scanner.nextLine();
 			return;
 		}
 		System.out.println("Enter Password");
-		String newPassword = scanner.next();
+		String newPassword = scanner.nextLine();
 		System.out.println("Enter Intitial deposit");
 		Double initialDeposit = scanner.nextDouble();
 		if (initialDeposit < 0) {

@@ -151,9 +151,9 @@ public class EmployeeMenu {
 					switch (adminSelction) {
 					case 1:
 						System.out.println("Please enter an account you wish to view");
-						String userToView = scanner.next();
-						if (val.accountExists(userToView)) {
-							singleAccountEditAdmin(username, userToView);
+						String userToViewAsAdmin = scanner.next();
+						if (val.accountExists(userToViewAsAdmin)) {
+							singleAccountEditAdmin(username, userToViewAsAdmin);
 						} else {
 							System.out.println("No account found");
 							break;

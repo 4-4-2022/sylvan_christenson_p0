@@ -1,0 +1,50 @@
+
+08:59:31.011 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully.
+09:00:31.531 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully.
+09:01:14.306 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully.
+09:01:57.969 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:02:19.281 [main] INFO  com.p0.Menus.AccountManagement - Account with the username: Tekkaman had its employment status changed to true
+09:03:00.993 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully as an employee.
+09:04:07.666 [main] INFO  com.p0.driver.Driver - Tekkaman transfered200.0  to Peppies
+09:04:56.362 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully as an employee.
+09:05:30.293 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Tekkaman  for the amount 200.0.
+09:05:38.224 [main] INFO  com.p0.driver.Driver - Tekkaman deposited200.0  into their account
+09:06:15.643 [main] INFO  com.p0.driver.Driver - A new account called Pegas has been created.
+09:06:29.062 [main] INFO  com.p0.driver.Driver - Pegas is now a secondary user of the account: Tekkaman.
+09:07:04.932 [main] INFO  com.p0.driver.Driver - Pegas has failed a log in attempt.
+09:07:39.980 [main] INFO  com.p0.driver.Driver - Pegas has failed a log in attempt.
+09:08:20.680 [main] INFO  com.p0.driver.Driver - Pegas has failed a log in attempt.
+09:08:29.848 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:10:37.229 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Pegas  for the amount 50.0.
+09:10:37.231 [main] INFO  com.p0.Menus.AccountManagement - Pegas purchased a ring called Standard for 50.0.
+09:13:02.191 [main] INFO  com.p0.driver.Driver - A new account called Tekkaman has been created.
+09:13:43.388 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:14:06.569 [main] INFO  com.p0.Menus.AccountManagement - Account with the username: Tekkaman had its employment status changed to true
+09:14:43.068 [main] INFO  com.p0.driver.Driver - A new account called Pegas has been created.
+09:14:50.383 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Peppies  for the amount 200.0.
+09:15:00.655 [main] INFO  com.p0.driver.Driver - Peppies deposited200.0  into their account
+09:15:43.325 [main] INFO  com.p0.driver.Driver - Peppies transfered100.0  to Pegas
+09:16:26.885 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully as an employee.
+09:17:27.663 [main] INFO  com.p0.driver.Driver - The account: Pegas  has been deleted by Tekkaman.
+09:19:05.275 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:19:35.998 [main] INFO  com.p0.driver.Driver - A new account called Space Knight has been created.
+09:20:41.020 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:22:03.935 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:22:39.169 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:24:24.370 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:24:54.397 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:25:27.283 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:27:10.612 [main] INFO  com.p0.driver.Driver - A new account called Tekkaman has been created.
+09:28:41.922 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+09:30:59.219 [main] INFO  com.p0.Menus.AccountManagement - Account with the username: Tekkaman had its employment status changed to true
+09:31:24.423 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully as an employee.
+09:32:26.722 [main] INFO  com.p0.driver.Driver - Tekkaman has logged in successfully as an employee.
+09:32:56.700 [main] INFO  com.p0.driver.Driver - A new account called Pegas has been created.
+09:33:24.378 [main] INFO  com.p0.driver.Driver - Tekkaman entered a negative value when attempting to transfer funds to Pegas
+09:33:48.833 [main] INFO  com.p0.driver.Driver - Tekkaman transfered200.0  to Pegas
+09:34:10.162 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Tekkaman  for the amount 200.0.
+09:34:17.770 [main] INFO  com.p0.driver.Driver - Tekkaman deposited200.0  into their account
+09:35:49.974 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Pegas  for the amount 0.0.
+09:35:49.974 [main] INFO  com.p0.Menus.AccountManagement - Pegas purchased a ring called  for 0.0.
+09:36:12.483 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Pegas  for the amount 50.0.
+09:36:12.484 [main] INFO  com.p0.Menus.AccountManagement - Pegas purchased a ring called Standard for 50.0.
