@@ -140,7 +140,7 @@ public class RingsRepositoryImpl{
 		List<Rings> ringList = new ArrayList<Rings>();
 		String searchParameter;
 		System.out.println("Please enter the jeweler you wish to search for.");
-		searchParameter = scanner.next();
+		searchParameter = scanner.nextLine();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
@@ -177,7 +177,7 @@ public class RingsRepositoryImpl{
 		List<Rings> ringList = new ArrayList<Rings>();
 		String searchParameter;
 		System.out.println("Please enter the gem you wish to search for.");
-		searchParameter = scanner.next();
+		searchParameter = scanner.nextLine();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
@@ -219,7 +219,7 @@ public class RingsRepositoryImpl{
 		List<Rings> ringList = new ArrayList<Rings>();
 		String searchParameter;
 		System.out.println("Please enter the material you wish to search for.");
-		searchParameter = scanner.next();
+		searchParameter = scanner.nextLine();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet set = null;
