@@ -4,3 +4,40 @@
 17:57:02.763 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.
 17:57:43.200 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.
 18:04:59.458 [main] INFO  com.p0.service.AccountManagement - Peppies purchased a ring for 150.0.
+12:46:23.448 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+12:52:42.699 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+12:53:45.017 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+12:54:32.322 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:01:11.630 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:03:49.747 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:10:12.530 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:10:49.229 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:11:18.303 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:12:31.937 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:12:46.496 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:21:01.928 [main] INFO  com.p0.driver.Driver - Peppies attempted to eositing, withdrawing, transfering, or altering an account balance.
+13:23:33.829 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value nter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:21:12.972 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depwhile depositing, withdrawing, transfering, or altering an account balance.
+13:28:01.914 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:28:14.757 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:28:14.761 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:28:42.483 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:28:42.487 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:29:03.702 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:29:18.328 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:29:18.332 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+09:12:30.757 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+09:12:30.762 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+11:19:10.175 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+11:19:10.180 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+13:08:42.653 [main] INFO  com.p0.driver.Driver - A successful transfer was completed from Pegas to Peppies for 200.0
+20:17:52.287 [main] INFO  com.p0.Menus.AccountManagement - Peppies purchased a ring for 50.0.
+20:37:40.957 [main] INFO  com.p0.Menus.AccountManagement - Standard purchased a ring calledPeppiesfor 50.0.
+20:40:24.383 [main] INFO  com.p0.Menus.AccountManagement - Tekkaman purchased a ring called Business for 50.0.
+20:42:37.193 [main] INFO  com.p0.Menus.AccountManagement - Tekkaman purchased a ring called Expense for 0.0.
+20:46:03.326 [main] INFO  com.p0.Menus.AccountManagement - Tekkaman purchased a ring called Standard for 50.0.
+20:46:32.036 [main] INFO  com.p0.Menus.AccountManagement - Tekkaman purchased a ring called Business Time for 150.0.
+20:52:34.257 [main] INFO  com.p0.Menus.AccountManagement - Gyoza purchased a ring called Standard for 50.0.
+20:55:10.413 [main] INFO  com.p0.Menus.AccountManagement - Gyoza purchased a ring called Standard for 50.0.
+21:00:23.743 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+21:00:23.747 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.

@@ -10,14 +10,22 @@ import com.p0.ui.ScreenPrint;
 public class Validation {
 	SQL SQL = new SQL();
 	public static Scanner scanner = new Scanner(System.in);
+	
+	
+	
+	
 	public String takeUserInput() {
 		String input = scanner.nextLine();
 		return input;
 	}
-	public boolean confirmation() {
+	
+	
+	
+	
+	
+	
+	public int getConfirmation() {
 		System.out.println("1) Yes               2)No");
-		Scanner scanner = new Scanner(System.in);
-		boolean confirmation = false;
 		boolean userInterested = true;
 		while (userInterested) {
 			int userSelction = scanner.nextInt();
@@ -25,20 +33,30 @@ public class Validation {
 
 			case 1:
 				userInterested = false;
-				confirmation = true;
-				break;
+				return 1;
 
 			case 2:
 				userInterested = false;
-				confirmation = false;
-				break;
+				return 2;
 			default:
 				ScreenPrint.printInvalidEntry();
 				break;
 			}
 
 		}
-		return confirmation;
+		return 0;
+		
+	}
+	
+	public boolean confirmation(int getConfirmation) {
+		
+		if(getConfirmation == 1) 
+		{
+		return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	
@@ -56,8 +74,18 @@ public class Validation {
 		
 		
 	
-	public boolean isNegative(double withdrawAmount) {
-		return (withdrawAmount < 0);
+	public void exitProgram() {
+		
+		System.out
+		.println("You are attempting to exit the program completely. Would you like to continue?");
+if (confirmation(getConfirmation())) {
+	System.out.println("Farewell. Program Exited");
+	System.exit(0);
+} else {
+	return;
+}
+		
 	}
+	
 
 }

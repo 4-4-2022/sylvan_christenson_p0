@@ -1,22 +1,24 @@
 package com.p0.driver;
 
 import java.sql.SQLException;
+import java.util.Scanner;
 
-import com.p0.accountRepository.AccountRepositoryImpl;
-import com.p0.service.JewelerShop;
-import com.p0.service.Storefront;
-import com.p0.ui.ScreenPrint;
-import com.p0.util.SQL;
+import com.p0.Menus.Storefront;
+import com.p0.service.AccountService;
 import com.p0.util.Validation;
 
 public class Driver {
+	
 	public static void main(String[] args) throws SQLException {
-		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
-		Validation validation = new Validation();
-		SQL SQL = new SQL();
-		ScreenPrint screenPrint = new ScreenPrint();
-		JewelerShop.shopMainMenu("Peppies");
-		//Storefront.storeFront();
+		
+		//AccountService accountService = new AccountService();
+		
+		//System.out.println(accountService.checkForAccount("Peppies").getUsername());
+		//Validation val = new Validation();
+		
+		//System.out.println(confirmation2(1));
+		//JewelerShop.shopMainMenu("Peppies");
+		Storefront.storeFront();
 		// System.out.println("Farewell.");
 
 	}

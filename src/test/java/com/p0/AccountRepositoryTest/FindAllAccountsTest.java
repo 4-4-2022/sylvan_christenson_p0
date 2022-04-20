@@ -1,4 +1,4 @@
-package com.p0.accountCreationTest;
+package com.p0.AccountRepositoryTest;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,54 +23,60 @@ import com.p0.model.Accounts;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-public class AccountCreationTest {
-
+public class FindAllAccountsTest {
 	@Mock
 	private AccountRepositoryImpl accountRepo;
 	private List<Accounts> accountList;
-
+	
 	@BeforeAll
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		this.accountRepo = new AccountRepositoryImpl();
 		this.accountList = new ArrayList<Accounts>();
-		this.accountList.add(new Accounts(600, "Pegas", "password"));
-		this.accountList.add(new Accounts(800, "Tekkaman", "password"));
-		this.accountList.add(new Accounts(900, "Peppies", "password"));
-		this.accountList.add(new Accounts(600, "Gooby", "password"));
+		this.accountList.add(new Accounts(600, "Peppies", "password", true, true, "Tekkaman"));
+		this.accountList.add(new Accounts(800, "Tekkaman", "password", true, true, "Pegas"));
+		this.accountList.add(new Accounts(900, "Pegas", "password", true, false, null));
+		this.accountList.add(new Accounts(600, "Gooby", "password", false, false, null));
 	}
 
 	@BeforeEach
 	public void BeforeEach() {
 
 	}
-
 	@Test
-	public void testFindAllAccounts() {
-
+	public void testFindAllAccounts() throws SQLException {
+		
 		Mockito.when(accountRepo.findAllAccounts()).thenReturn(accountList);
-		Assertions.assertEquals(4, accountRepo.findAllAccounts().size());
+		Assertions.assertEquals(600, accountRepo.findAllAccounts().get(0).getAccountBalance());
 
 	}
-
 	@Test
-	public void testSave() throws SQLException {
-
-		Accounts newAccount = new Accounts();
-		newAccount.setAccountBalance(500);
-		newAccount.setUsername("newAccount");
-		newAccount.setPassword("password");
-		Mockito.when(accountRepo.getNewAccountInfo()).thenReturn(newAccount);
+	public void testFindAllAccountsUsername() throws SQLException {
+		
 		Mockito.when(accountRepo.findAllAccounts()).thenReturn(accountList);
-		accountList.add(newAccount);
-
-		Assertions.assertEquals(5, accountRepo.findAllAccounts().size());
+		Assertions.assertEquals("Peppies", accountRepo.findAllAccounts().get(0).getUsername());
 
 	}
+	@Test
+	public void testFindAllAccountsPassword() throws SQLException {
+		
+		Mockito.when(accountRepo.findAllAccounts()).thenReturn(accountList);
+		Assertions.assertEquals("password", accountRepo.findAllAccounts().get(0).getPassword());
+
+	}
+	@Test
+	public void testFindAllAccountsFail() throws SQLException {
+		
+		Mockito.when(accountRepo.findAllAccounts()).thenReturn(accountList);
+		Assertions.assertNotEquals(3, accountRepo.findAllAccounts().size());
+	}
+	
+	
+	
+	
 
 	@AfterEach
 	public void afterEach() {
-		
 
 	}
 

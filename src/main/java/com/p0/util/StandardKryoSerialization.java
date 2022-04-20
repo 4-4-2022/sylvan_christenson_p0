@@ -1,4 +1,4 @@
-package com.p0.serialization;
+package com.p0.util;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
@@ -12,7 +12,7 @@ public class StandardKryoSerialization {
 		Kryo kryo = new Kryo();
 		kryo.register(Rings.class);
 		
-		Rings ring = new Rings("Iron", "Ruby", "Peppies", "Iron Band", null, null, null, 50);
+		Rings ring = new Rings("Iron", "Ruby", "Peppies", "Iron Band", 50);
 		
 		Output output = new Output(System.out);
 		kryo.writeObject(output, ring);

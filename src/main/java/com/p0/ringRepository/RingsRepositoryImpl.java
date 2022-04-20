@@ -12,18 +12,22 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.p0.Menus.AccountManagement;
 import com.p0.accountRepository.AccountRepositoryImpl;
-import com.p0.model.Accounts;
 import com.p0.model.Rings;
-import com.p0.service.AccountManagement;
+import com.p0.ui.ScreenPrint;
 import com.p0.util.Connector;
 import com.p0.util.SQL;
 
-public class RingsRepositoryImpl implements RingRepository {
+public class RingsRepositoryImpl{
 	private static final Logger logger = LoggerFactory.getLogger(AccountManagement.class);
 	public static SQL sql = new SQL();
 	public AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 	public Scanner scanner = new Scanner(System.in);
+	
+	
+	
+	
 	public void printRingList(List<Rings> ringList) {
 		
 		for (Rings ring : ringList) {
@@ -53,6 +57,28 @@ public class RingsRepositoryImpl implements RingRepository {
 	public void giveRing(String receivingUser) {
 
 	}
+	public Rings newRingOnlyJeweler() {
+		Rings newRing = new Rings();
+		System.out.println("Who would you like to make this ring?");
+		newRing.setJeweler(scanner.next());
+		return newRing;
+		}
+	
+	public Rings newRing() {
+		Rings newRing = new Rings();
+		System.out.println("Who would you like to make this ring?");
+		newRing.setJeweler(scanner.next());
+		System.out.println("What material would you like this ring to be made out of?");
+		newRing.setMaterial(scanner.next());
+		System.out.println("What type of gem would you like to be placed in this ring?");
+		newRing.setGem(scanner.next());
+		
+		return newRing;
+		
+		
+
+	}
+
 
 	public Rings customRing() {
 		Rings customRing = new Rings();
@@ -68,15 +94,37 @@ public class RingsRepositoryImpl implements RingRepository {
 		
 
 	}
+	
+	public void purchaseRing(String username) throws SQLException {
+		
+		System.out.println("Please indicate the name of the ring you wish to purchase.");
+		String ringName = scanner.nextLine();
+		if (findSingleRing(ringName).getPrice() > sql
+				.executeQuerySQL(sql.getAccountBalanceSQL(username)).getDouble(1)) {
+			System.out.println("Insufficient Balance");
+			return;
+		}
+		else {
+		buyRing(findSingleRing(ringName).getPrice(),ringName, username);
+		}
 
-	public void buyRing(double price, String username) throws SQLException {
-		accountRepo.withdraw(username, price);
-		if(sql.executeQuerySQL(sql.getAccountBalanceSQL(username)).getDouble(1) > price) {
-		logger.info(username + " " + "purchased a ring for" + " " + price + ".");}
+		ScreenPrint.printTransactionSuccessful();
+		return;
 		
 		
-
 	}
+	
+	
+	
+	
+	
+
+	public void buyRing(double price, String ringName, String username) throws SQLException {
+		accountRepo.withdraw(username, price);
+		logger.info(username + " " + "purchased a ring called" + " " +  ringName + " " + "for" + " " + price + ".");}
+		
+		
+
 	
 	
 	public List<Rings> searchByJeweler() {
@@ -269,21 +317,37 @@ public class RingsRepositoryImpl implements RingRepository {
 		return ringList;
 	}
 
-	public void setEngraving() {
-
-	}
-
-	@Override
-	public void buyRing() {
+	
+public void saveRingToRings(Rings newRing) {
 		
-		
-		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		final String SQL = "insert into rings values( ?, ?, ?, ?, ?, ?, ?, ?)";
 
-	}
+		try {
+			conn = Connector.getConnection();
+			stmt = conn.prepareStatement(SQL);
+			stmt.setString(1, newRing.getItemName());
+			stmt.setString(2, newRing.getMaterial());
+			stmt.setString(3, newRing.getGem());
+			stmt.setString(4, newRing.getJeweler());
+			stmt.setString(5, newRing.getEngraving());
+			stmt.setString(6, newRing.getCurrentOwner());
+			stmt.setString(7, newRing.getPreviousOwner());
+			stmt.setDouble(8, newRing.getPrice());
+			stmt.execute();
 
-	@Override
-	public void printRings() {
-		// TODO Auto-generated method stub
+		} catch (SQLException e) {
+
+		} finally {
+			try {
+				conn.close();
+				stmt.close();
+				System.out.println("Ring added to order list Successfully");
+			} catch (SQLException e) {
+
+			}
+		}
 
 	}
 

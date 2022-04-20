@@ -6,52 +6,110 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.ServiceConfigurationError;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.p0.Menus.AccountManagement;
+import com.p0.Menus.EmployeeMenu;
+import com.p0.Menus.ServiceSelection;
 import com.p0.driver.Driver;
 import com.p0.model.Accounts;
-import com.p0.service.EmployeeMenu;
+import com.p0.service.AccountDetailsManipulation;
 import com.p0.ui.ScreenPrint;
 import com.p0.util.Connector;
 import com.p0.util.SQL;
 import com.p0.util.Validation;
 
-public class AccountRepositoryImpl implements AccountRepository {
+public class AccountRepositoryImpl{
 	// private static AccountRepositoryImpl accountRepo;
 
 	final static Logger logger = LoggerFactory.getLogger(Driver.class);
 	SQL SQL = new SQL();
 	Validation validation = new Validation();
-	private static final ResultSet String = null;
+	private boolean validated = false;
+	public Scanner scanner = new Scanner(System.in);
+	public AccountManagement accountManagement = new AccountManagement();
 	
 	
 	
+
 	public void printAccountList() {
-		
+
 		for (Accounts account : findAllAccounts()) {
 			System.out.println(account.toStringNoPass());
 			System.out.println("-----------------------");
-			
+
 		}
 		System.out.println("List complete.");
-		
-		
+
 	}
 
-	public void getAccountBalance(String username) {
+	public double getAccountBalance(String username) {
 		for (Accounts account : findAllAccounts()) {
-			if (account.getUsername().equalsIgnoreCase(username)) {
+			if (account.getUsername().equals(username)) {
 				double currentBalance = account.getAccountBalance(username);
-				System.out.println("Your current balance is:" + " " + currentBalance);
+				return currentBalance;
 			}
 		}
+		return 0;
 
 	}
+	public void transferFunds(String usernameInput) throws SQLException {
+		
+		System.out.println("Please enter the username of the account you wish to transfer funds to");
+		String recveivingUser = scanner.next();
+		if (validation.accountExists(recveivingUser)) {
+			System.out.println(
+					"Please enter an amount you wish to transfer to the account:" + " " + recveivingUser);
+			double transferAmount = scanner.nextDouble();
+			if (transferAmount < 0) {
+				System.out.println("No negative values allowed.");
+				return;
+			}
+			transfer(usernameInput, recveivingUser, transferAmount);
 
+		} else {
+			boolean isUserInterested = true;
+			while (isUserInterested) {
+				ScreenPrint.printNoTransferUserFound(recveivingUser);
+				int userChoice = scanner.nextInt();
+				switch (userChoice) {
+				case 1:
+					isUserInterested = false;
+					break;
+				case 2:
+					createAccount();
+					isUserInterested = false;
+					break;
+				case 3:
+					ServiceSelection serviceSelection = new ServiceSelection();
+					serviceSelection.serviceSelction(usernameInput);
+					break;
+				default:
+					ScreenPrint.printInvalidEntry();
+					break;
+				}
+
+			}
+			System.out.println(
+					"Please enter an amount you wish to transfer to the account:" + " " + recveivingUser);
+			double transferAmount = scanner.nextDouble();
+			if (transferAmount < 0) {
+				System.out.println("No negative values allowed.");
+				return;
+			}
+			transfer(usernameInput, recveivingUser, transferAmount);
+			return;
+
+		}
+		ScreenPrint.printTransactionSuccessful();
+		return;
+	}
 	public void transfer(String username, String receivingUser, double withdrawAmount) throws SQLException {
 
 		try {
@@ -79,6 +137,19 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	}
 
+	public void withdrawFunds(String usernameInput) throws SQLException {
+
+		System.out.println("Please enter an amount you wish to withdraw.");
+		double withdrawAmount = scanner.nextDouble();
+		if (withdrawAmount < 0) {
+			System.out.println("No negative values allowed.");
+			return;
+		}
+		withdraw(usernameInput, withdrawAmount);
+		accountManagement.accountDetailsManagement(usernameInput);
+
+	}
+
 	public void withdraw(String username, double withdrawAmount) throws SQLException {
 		for (Accounts account : findAllAccounts()) {
 			if (account.getUsername().equals(username)) {
@@ -94,18 +165,31 @@ public class AccountRepositoryImpl implements AccountRepository {
 		}
 	}
 
+	
+	
+	
+	public void depositFunds(String usernameInput) throws SQLException {
+		
+		
+		
+		System.out.println("Please enter an amount you wish to deposit.");
+		double depositAmount = scanner.nextDouble();
+		if (depositAmount < 0) {
+			System.out.println("No negative values allowed.");
+			return;
+		}
+		deposit(usernameInput, depositAmount);
+		accountManagement.accountDetailsManagement(usernameInput);
+		
+		
+	}
+	
+	
 	public void deposit(String username, double depositAmount) throws SQLException {
 		for (Accounts account : findAllAccounts()) {
 			if (account.getUsername().equals(username)) {
 				double previousBalance = account.getAccountBalance(username);
 				double newBalance = (previousBalance + depositAmount);
-				if (validation.isNegative(depositAmount)) { ScreenPrint.printNoNegatives(username);
-				break;
-				}
-				if (newBalance < 0) {
-					System.out.println("Insufficient funds");
-					break;
-				} else {
 					SQL.updateAccountBalanceSQL(username, newBalance);
 
 				}
@@ -113,7 +197,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 			}
 		}
 
-	}
+	
 
 	public Accounts getAccountSQL(String username) {
 		Accounts newAccount = new Accounts();
@@ -165,11 +249,31 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	}
 
-	public boolean signIn(String username, String password) throws SQLException {
-		boolean validated = false;
+	public void signIn() throws SQLException {
+
+		System.out.println("Enter Username");
+		String username = scanner.next();
+		if (validation.accountExists(username) == false) {
+			System.out.println("No account found.");
+			return;
+		}
+
+		System.out.println("Enter Password");
+		String password = scanner.next();
+		if (authenticate(username, password)) {
+			accountManagement.accountDetailsManagement(username);
+		} else {
+			System.out.println("No account found.");
+		}
+		return;
+
+	}
+
+	public boolean authenticate(String username, String password) throws SQLException {
 		for (Accounts accounts : findAllAccounts()) {
 
 			if (accounts.getUsername().equals(username) && accounts.getPassword().equals(password)) {
+				validated = true;
 
 				if (accounts.isAdministrator()) {
 					EmployeeMenu.administratorMenu(username);
@@ -178,7 +282,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 				else if (accounts.isEmployee()) {
 					ScreenPrint.printContinueAsEmployee(username);
 				} else {
-					validated = true;
 				}
 			} else {
 				validated = false;
@@ -189,7 +292,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 	}
 
 	public void deleteAccount(String accountToDelete, String username) throws SQLException {
-		if(accountToDelete.equals(username)) {
+		if (accountToDelete.equals(username)) {
 			System.out.println("You cannot delete your own account");
 			return;
 		}
@@ -202,8 +305,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 			conn = Connector.getConnection();
 			stmt = conn.prepareStatement(SQL);
 			stmt.setString(1, accountToDelete);
-			stmt.execute(SQL);
-			
+			stmt.execute();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -216,6 +318,45 @@ public class AccountRepositoryImpl implements AccountRepository {
 			}
 		}
 
+	}
+	
+	
+	public void secondaryUser(String usernameInput) {
+		
+		
+		try {
+			System.out.println(
+					"Please enter the username of the account you wish to add as a secondary user");
+			String secondaryUser = scanner.next();
+			if (checkForSecondaryUser(usernameInput) == null) {
+
+				if (checkForAccount(secondaryUser) == null) {
+					System.out.println("No account was found... creating a new account.");
+
+					createAccount();
+					setSecondaryUser(usernameInput, secondaryUser);
+					logger.info(secondaryUser + " was added as a secondary user to" + " " + usernameInput);
+				} else {
+					setSecondaryUser(usernameInput, secondaryUser);
+
+				}
+
+			} else {
+				System.out.println("Account already has a secondary user");
+				ScreenPrint.printAccountManagement(usernameInput);
+
+			}
+
+		}
+
+		catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return;
+		
+		
+		
 	}
 
 	public String checkForSecondaryUser(String username) throws SQLException {
@@ -308,30 +449,37 @@ public class AccountRepositoryImpl implements AccountRepository {
 		return accountList;
 	}
 
-	public Accounts getNewAccountInfo() throws SQLException {
-		Scanner scanner = new Scanner(System.in);
+	public Accounts getNewAccountInfo(String newUsername, String newPassword, Double initialDeposit) throws SQLException {
+
 		Accounts newAccount = new Accounts();
-		System.out.println("Enter the username for this account");
-		newAccount.setUsername(scanner.next());
-		if (validation.accountExists(newAccount.getUsername())) {return null;
-	
-		} else {
-			System.out.println("Enter an amount you wish to deposit initially to this new account account.");
-			newAccount.setAccountBalance(scanner.nextDouble());
-			System.out.println("Enter desired password");
-			newAccount.setPassword(scanner.next());
-			System.out.println("New account username = " + newAccount.getUsername());
-			System.out.println("Your new account details are " + newAccount.toStringNoPass());
-			return newAccount;
-			
+		newAccount.setAccountBalance(initialDeposit);
+		newAccount.setPassword(newPassword);
+		newAccount.setUsername(newUsername);
+		return newAccount;
+
+	}
+
+	public void createAccount() throws SQLException {
+		
+		System.out.println("Enter Username");
+		String newUsername = scanner.next();
+		if (validation.accountExists(newUsername)) {
+			System.out.println("Account already exists. Account was not created");
+			scanner.nextLine();
+			return;
 		}
+		System.out.println("Enter Password");
+		String newPassword = scanner.next();
+		System.out.println("Enter Intitial deposit");
+		Double initialDeposit = scanner.nextDouble();
+		if (initialDeposit < 0) {
+			return;
+		}
+		save(getNewAccountInfo(newUsername, newPassword, initialDeposit));
 	}
 
 	public void save(Accounts newAccount) {
-		if (newAccount == null) {
-			System.out.println("Account already exists. Account was not created");
-			return;
-		}
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		final String SQL = "insert into accounts values( ?, ?, ?, ?, ?)";
@@ -360,21 +508,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
 	}
 
-	public AccountRepositoryImpl() {
-		super();
-
-	}
-
-	@Override
-	public void update(Accounts account) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Accounts account) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

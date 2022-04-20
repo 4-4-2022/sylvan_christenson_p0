@@ -1,4 +1,4 @@
-package com.p0.service;
+package com.p0.Menus;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -10,10 +10,9 @@ import com.p0.util.Validation;
 public class EmployeeMenu {
 	public static Validation validation = new Validation();
 	public static EditAccount edit = new EditAccount();
-
+	Scanner scanner = new Scanner(System.in);
 
 	public static void singleAccountEditEmployee(String username, String userToView) throws SQLException {
-
 		Scanner scanner = new Scanner(System.in);
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 		ScreenPrint.printEmployeeMenuSingleAccount(username, userToView);
@@ -24,7 +23,7 @@ public class EmployeeMenu {
 
 			case 1:
 				System.out.println("This will permanently delete this account. Are you sure?");
-				if (validation.confirmation()) {
+				if (validation.confirmation(validation.getConfirmation())) {
 					accountRepo.deleteAccount(userToView, username);
 				} else {
 					break;
@@ -55,12 +54,13 @@ public class EmployeeMenu {
 				break;
 			case 2:
 				System.out.println("This will permanently delete this account. Are you sure?");
-				if (validation.confirmation()) {
+				if (validation.confirmation(validation.getConfirmation())) {
 					accountRepo.deleteAccount(userToView, username);
 					break;
 
 				}
-				break;
+				else {
+				break;}
 
 			case 3:
 				userInterested = false;
@@ -73,11 +73,10 @@ public class EmployeeMenu {
 
 	}
 
-	public static void employeeMenu(String username) throws SQLException {
+	public static void employeeMenu(String username, Scanner scanner) throws SQLException {
 		Validation val = new Validation();
 		ServiceSelection serviceSelection = new ServiceSelection();
 		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
-		Scanner scanner = new Scanner(System.in);
 		ScreenPrint.printContinueAsEmployee(username);
 		boolean hasNotChosen = true;
 		while (hasNotChosen) {
@@ -97,6 +96,7 @@ public class EmployeeMenu {
 						String userToView = scanner.next();
 						if (val.accountExists(userToView)) {
 							singleAccountEditEmployee(username, userToView);
+							break;
 						} else {
 							System.out.println("No account found");
 							break;
@@ -157,8 +157,12 @@ public class EmployeeMenu {
 
 					case 3:
 						Storefront.storeFront();
+						break;
 					case 4:
 						serviceSelection.serviceSelction(username);
+						break;
+					
+						
 
 
 					default:
@@ -168,7 +172,7 @@ public class EmployeeMenu {
 				}
 
 			case 3:
-				employeeMenu(username);
+				employeeMenu(username, scanner);
 
 			default:
 				ScreenPrint.printInvalidEntry();

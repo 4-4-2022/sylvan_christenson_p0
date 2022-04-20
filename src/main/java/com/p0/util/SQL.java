@@ -52,7 +52,6 @@ public class SQL {
 		Connection conn = Connector.getConnection();
 		PreparedStatement stmt = conn.prepareStatement(SQL);
 		stmt.setString(1, username);
-
 		return stmt;
 
 	}

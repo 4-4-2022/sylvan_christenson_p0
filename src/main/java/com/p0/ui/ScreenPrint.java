@@ -58,6 +58,7 @@ public class ScreenPrint {
 		System.out.println("6) Return to Log In menu to sign in with a different account.");
 		System.out.println("7) Add an account as a secondary user.");
 		System.out.println("8) Exit Program");
+		System.out.println("9) Enter the shop.");
 
 	}
 
@@ -73,6 +74,7 @@ public class ScreenPrint {
 		System.out.println("6) Return to Log In menu to sign in with a different account.");
 		System.out.println("7) Add an account as a secondary user.");
 		System.out.println("8) Exit Program");
+		System.out.println("9) Enter the shop.");
 
 	}
 
@@ -108,17 +110,21 @@ public class ScreenPrint {
 	}
 
 	public static void printAdministratorMenuSingleAccount(String username, String userToView) {
-		AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
-		System.out.println(" You are signed in as an Administrator:" + " " + username);
-		System.out.println(
-				" You have the authority to view and edit all accounts as well as promote accounts to Employee and Administrator status.");
-		System.out.println(" You are currently viewing the account:" + " " + userToView);
-		System.out.println(accountRepo.checkForAccount(userToView).toStringNoPass());
-		System.out.println("       What would you like to do?");
-		System.out.println("--------------------------------------------- ");
-		System.out.println("1) Edit Account this account.");
-		System.out.println("2) Delete this account.");
-		System.out.println("3) Go back to Administrator menu.");
+		try {
+			AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
+			System.out.println(" You are signed in as an Administrator:" + " " + username);
+			System.out.println(
+					" You have the authority to view and edit all accounts as well as promote accounts to Employee and Administrator status.");
+			System.out.println(" You are currently viewing the account:" + " " + userToView);
+			System.out.println(accountRepo.checkForAccount(userToView).toStringNoPass());
+			System.out.println("       What would you like to do?");
+			System.out.println("--------------------------------------------- ");
+			System.out.println("1) Edit Account this account.");
+			System.out.println("2) Delete this account.");
+			System.out.println("3) Go back to Administrator menu.");
+		} catch (NullPointerException e) {
+	
+		}
 	}
 
 	public static void printEmployeeMenuSingleAccount(String username, String userToView) {

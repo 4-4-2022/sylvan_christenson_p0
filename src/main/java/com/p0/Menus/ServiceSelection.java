@@ -1,10 +1,8 @@
-package com.p0.service;
+package com.p0.Menus;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import com.p0.accountRepository.AccountRepository;
-import com.p0.accountRepository.AccountRepositoryImpl;
 import com.p0.ui.ScreenPrint;
 
 public class ServiceSelection {
@@ -12,9 +10,9 @@ public class ServiceSelection {
 	
 public void serviceSelction(String username) throws SQLException {
 	
-		
-		ScreenPrint.printSeriveSelction();
 		Scanner scanner = new Scanner(System.in);
+		ScreenPrint.printSeriveSelction();
+		AccountManagement accountManagement = new AccountManagement();
 		
 		boolean userInterested = true;
 		while (userInterested) {
@@ -23,11 +21,11 @@ public void serviceSelction(String username) throws SQLException {
 
 			case 1: 
 				
-				JewelerShop.shopMainMenu(username);
+				JewelerShop.shopMainMenu(username );
 				break;
 				
 			case 2:
-				AccountManagement.accountDetailsManagement(username);
+				accountManagement.accountDetailsManagement(username);
 				break;
 			default:
 				ScreenPrint.printInvalidEntry();
