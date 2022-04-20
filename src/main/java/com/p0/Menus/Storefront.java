@@ -17,7 +17,6 @@ public class Storefront {
 
 			AccountRepositoryImpl accountRepo = new AccountRepositoryImpl();
 			Scanner scanner = new Scanner(System.in);
-			Validation val = new Validation();
 
 			boolean isUserInterested = true;
 			do {

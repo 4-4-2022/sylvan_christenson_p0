@@ -11,15 +11,8 @@ public class Driver {
 	
 	public static void main(String[] args) throws SQLException {
 		
-		//AccountService accountService = new AccountService();
 		
-		//System.out.println(accountService.checkForAccount("Peppies").getUsername());
-		//Validation val = new Validation();
-		
-		//System.out.println(confirmation2(1));
-		//JewelerShop.shopMainMenu("Peppies");
 		Storefront.storeFront();
-		// System.out.println("Farewell.");
 
 	}
 

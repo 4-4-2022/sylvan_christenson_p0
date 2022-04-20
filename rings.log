@@ -41,3 +41,7 @@
 20:55:10.413 [main] INFO  com.p0.Menus.AccountManagement - Gyoza purchased a ring called Standard for 50.0.
 21:00:23.743 [main] INFO  com.p0.driver.Driver - Peppies attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
 21:00:23.747 [main] INFO  com.p0.driver.Driver - null attempted to enter a negative value while depositing, withdrawing, transfering, or altering an account balance.
+21:21:03.539 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Peppies  for the amount 50.0.
+21:21:03.540 [main] INFO  com.p0.Menus.AccountManagement - Peppies purchased a ring called Standard for 50.0.
+21:26:52.882 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as and administrator.
+21:31:00.365 [main] INFO  com.p0.driver.Driver - A new account called Testo has been created
