@@ -21,9 +21,7 @@ public class AccountManagement {
 		Scanner scanner = new Scanner(System.in);
 		Validation validation = new Validation();
 		boolean isUserInterested = true;
-
 		try {
-
 			while (isUserInterested) {
 				ScreenPrint.printAccountManagement(usernameInput);
 				int userSelection = scanner.nextInt();
@@ -63,6 +61,5 @@ public class AccountManagement {
 		} catch (InputMismatchException e) {
 			ScreenPrint.printInvalidEntry();
 		}
-
 	}
 }

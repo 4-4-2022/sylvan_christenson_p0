@@ -48,3 +48,6 @@
 09:35:49.974 [main] INFO  com.p0.Menus.AccountManagement - Pegas purchased a ring called  for 0.0.
 09:36:12.483 [main] INFO  com.p0.driver.Driver - A withdraw was made from the account Pegas  for the amount 50.0.
 09:36:12.484 [main] INFO  com.p0.Menus.AccountManagement - Pegas purchased a ring called Standard for 50.0.
+10:18:23.552 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+10:20:34.108 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
+17:27:21.264 [main] INFO  com.p0.driver.Driver - Peppies has logged in successfully as an administrator.
